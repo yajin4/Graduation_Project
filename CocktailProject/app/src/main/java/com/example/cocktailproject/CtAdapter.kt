@@ -3,6 +3,7 @@ package com.example.cocktailproject
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +19,9 @@ class CtAdapter(var items:ArrayList<CtData>)
     var itemClickListener:OnItemClickListener?=null
 
     inner class CtViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
-        var imageView: ImageView =itemView.findViewById(R.id.imageView)
-        var textView: TextView = itemView.findViewById(R.id.textView)
+        var imgBtn: Button=itemView.findViewById(R.id.ct_img_btn)
+        //var imageView: ImageView =itemView.findViewById(R.id.imageView)
+        var textView: TextView = itemView.findViewById(R.id.ct_name)
 
         init {
             itemView.setOnClickListener {
@@ -39,7 +41,8 @@ class CtAdapter(var items:ArrayList<CtData>)
     override fun onBindViewHolder(holder: CtViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        holder.imageView.setImageResource(items[position].ctPhoto)
+        holder.imgBtn.setBackgroundResource(items[position].ctPhoto)
+        //holder.imageView.setImageResource(items[position].ctPhoto)
         holder.textView.text=items[position].ctName
     }
     // Return the size of your dataset (invoked by the layout manager)

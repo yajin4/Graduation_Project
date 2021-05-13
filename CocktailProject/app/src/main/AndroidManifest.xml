@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cocktailproject">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -11,8 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailProject">
-        <activity android:name=".MainActivity"
-                        android:label="@string/first_activity">
+        <activity android:name=".Detail"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/first_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

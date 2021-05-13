@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:layout_margin="10dp"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/back">
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:scaleType="fitXY"
-        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/ct_img_btn"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_gravity="center"
+        android:background="@drawable/back" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/ct_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="10dp"
-        android:textSize="14sp"
+        android:layout_gravity="center"
+        android:background="@drawable/back"
+        android:padding="5dp"
         android:text="cocktail name"
-        android:background="@drawable/back"/>
+        android:textSize="14sp" />
 </LinearLayout>

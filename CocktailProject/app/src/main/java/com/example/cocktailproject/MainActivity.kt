@@ -17,10 +17,10 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         val view=binding.root
         setContentView(view)
-        init()
+        show_cocktail_list()
     }
 
-    private fun init() {
+    private fun show_cocktail_list() {
         binding.ctRecyclerView.layoutManager=GridLayoutManager(this,2) //spancount : 열 개수
         //adapter 생성
         adapter= CtAdapter(ArrayList<CtData>())
