@@ -23,19 +23,20 @@ class MainActivity : AppCompatActivity() {
     private fun show_cocktail_list() {
         binding.ctRecyclerView.layoutManager=GridLayoutManager(this,2) //spancount : 열 개수
         //adapter 생성
-        adapter= CtAdapter(ArrayList<CtData>())
+        adapter= CtAdapter(ArrayList<Cocktail>())
         binding.ctRecyclerView.adapter=adapter
         for (i in 1..30)
-            adapter.items.add(CtData("img1",R.drawable.cocktail_img2))
+            adapter.items.add(Cocktail("img1",R.drawable.cocktail_img2))
 
         adapter.itemClickListener=object : CtAdapter.OnItemClickListener{
             override fun OnItemClick(
                 holder: CtAdapter.CtViewHolder,
                 view: View,
-                data: CtData,
+                data: Cocktail,
                 position: Int
             ) {
                 Toast.makeText(this@MainActivity,data.toString(),Toast.LENGTH_SHORT).show()
+                // Detail activity로 이동.
             }
 
         }
