@@ -4,17 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cocktailproject.databinding.CtlistInstanceBinding
 
-class CtAdapter(var items:ArrayList<CtData>)
+class CtAdapter(var items:ArrayList<Cocktail>)
     :RecyclerView.Adapter<CtAdapter.CtViewHolder>()
 {
 
     interface OnItemClickListener{
-        fun OnItemClick(holder: CtViewHolder, view:View, data:CtData, position: Int)
+        fun OnItemClick(holder: CtViewHolder, view:View, data:Cocktail, position: Int)
     }
     var itemClickListener:OnItemClickListener?=null
 
