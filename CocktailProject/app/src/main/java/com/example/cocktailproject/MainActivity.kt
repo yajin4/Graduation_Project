@@ -1,5 +1,6 @@
 package com.example.cocktailproject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -25,9 +26,9 @@ class MainActivity : AppCompatActivity() {
         //adapter 생성
         adapter= CtAdapter(ArrayList<Cocktail>())
         binding.ctRecyclerView.adapter=adapter
-        for (i in 1..30)
-            adapter.items.add(Cocktail("img1",R.drawable.cocktail_img2))
-
+        //add data
+        manage_cocktail()
+        //register click event
         adapter.itemClickListener=object : CtAdapter.OnItemClickListener{
             override fun OnItemClick(
                 holder: CtAdapter.CtViewHolder,
@@ -37,8 +38,18 @@ class MainActivity : AppCompatActivity() {
             ) {
                 Toast.makeText(this@MainActivity,data.toString(),Toast.LENGTH_SHORT).show()
                 // Detail activity로 이동.
+                val intent=Intent(this@MainActivity,DetailActivity::class.java)
+                intent.putExtra("selectedCocktail",data)
+                startActivity(intent)
             }
 
         }
+    }
+
+    //adapter에 아이템 추가
+    private fun manage_cocktail() {
+        //TODO("data 추가")
+        for (i in 1..30)
+            adapter.items.add(Cocktail("img1",R.drawable.cocktail_img2))
     }
 }
