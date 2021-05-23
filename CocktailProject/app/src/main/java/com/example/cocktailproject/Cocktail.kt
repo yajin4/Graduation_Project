@@ -1,5 +1,7 @@
 package com.example.cocktailproject
 
-data class Cocktail(var ctName:String, var ctPhoto:Int) {
+import java.io.Serializable
+
+data class Cocktail(var ctName:String, var ctPhoto:Int) : Serializable {
 
 }
