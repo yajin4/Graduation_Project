@@ -31,10 +31,14 @@ class DetailActivity : AppCompatActivity() {
 
     private fun btnInit() {
         binding.backBtn.setOnClickListener {
-            val i= Intent(this@DetailActivity, MainActivity::class.java)
-            startActivity(i)
+            val intent= Intent(this@DetailActivity, MainActivity::class.java)
+            startActivity(intent)
         }
         //TODO("Ar 버튼 구현 필요")
+        binding.arBtn.setOnClickListener {
+            val i2 = Intent(this@DetailActivity, ARActivity::class.java)
+            startActivity(i2)
+        }
     }
 
     //넘어온 칵테일 이름, 사진 출력
