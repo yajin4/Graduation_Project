@@ -3,6 +3,7 @@
     package="com.example.cocktailproject">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailProject">
-        <activity android:name=".Detail"></activity>
+        <activity android:name=".ARActivity"></activity>
+        <activity android:name=".DetailActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/first_activity">

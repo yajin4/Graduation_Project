@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         binding.ctRecyclerView.layoutManager=GridLayoutManager(this,2) //spancount : 열 개수
         //adapter 생성
         adapter= CtAdapter(ArrayList<Cocktail>())
-        binding.ctRecyclerView.adapter=adapter
         //add data
         manage_cocktail()
         //register click event
@@ -44,6 +43,8 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
+        binding.ctRecyclerView.adapter=adapter
     }
 
     //adapter에 아이템 추가

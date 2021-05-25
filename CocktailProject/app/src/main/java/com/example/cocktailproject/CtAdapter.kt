@@ -1,5 +1,6 @@
 package com.example.cocktailproject
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +20,16 @@ class CtAdapter(var items:ArrayList<Cocktail>)
     inner class CtViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         var imgBtn: Button=itemView.findViewById(R.id.ct_img_btn)
         //var imageView: ImageView =itemView.findViewById(R.id.imageView)
-        var textView: TextView = itemView.findViewById(R.id.ct_name)
+        var nameTextView: TextView = itemView.findViewById(R.id.ct_name)
 
         init {
             itemView.setOnClickListener {
+                itemClickListener?.OnItemClick(this, it, items[adapterPosition], adapterPosition)
+            }
+            imgBtn.setOnClickListener {
+                itemClickListener?.OnItemClick(this, it, items[adapterPosition], adapterPosition)
+            }
+            nameTextView.setOnClickListener {
                 itemClickListener?.OnItemClick(this, it, items[adapterPosition], adapterPosition)
             }
         }
@@ -41,7 +48,7 @@ class CtAdapter(var items:ArrayList<Cocktail>)
         // contents of the view with that element
         holder.imgBtn.setBackgroundResource(items[position].ctPhoto)
         //holder.imageView.setImageResource(items[position].ctPhoto)
-        holder.textView.text=items[position].ctName
+        holder.nameTextView.text=items[position].ctName
     }
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int {

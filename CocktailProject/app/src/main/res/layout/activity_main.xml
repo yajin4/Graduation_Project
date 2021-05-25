@@ -16,7 +16,7 @@
         android:padding="10dp"
         android:gravity="center"
         android:layout_weight="0"
-        android:text="TextView" />
+        android:text="Cocktail List" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ctRecyclerView"

@@ -17,13 +17,34 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         //intent로 전달받은 selected cocktail확인
-        selectedCocktail=Intent().getSerializableExtra("selectedCocktail") as Cocktail
-        //TODO("해당 cocktail detail가져오기")
+        selectedCocktail=intent.getSerializableExtra("selectedCocktail") as Cocktail
+
+
 
         binding = ActivityDetailBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        load_selected_cocktail()
         show_detail()
+        btnInit()
+    }
+
+    private fun btnInit() {
+        binding.backBtn.setOnClickListener {
+            val intent= Intent(this@DetailActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
+        //TODO("Ar 버튼 구현 필요")
+        binding.arBtn.setOnClickListener {
+            val i2 = Intent(this@DetailActivity, ARActivity::class.java)
+            startActivity(i2)
+        }
+    }
+
+    //넘어온 칵테일 이름, 사진 출력
+    private fun load_selected_cocktail() {
+        binding.ctImg.setImageResource(selectedCocktail.ctPhoto)
+        binding.ctNameIndetail.text=selectedCocktail.ctName
     }
 
     private fun show_detail() {
@@ -34,7 +55,7 @@ class DetailActivity : AppCompatActivity() {
         // recyclerview에 연결
         binding.cocktailIngLayout.adapter = adapter
         //data 추가
-        manage_cocktail_detail()
+        load_selected_cocktail_detail()
 
         //click event
         adapter.itemClickListener = object : DtAdapter.OnItemClickListener {
@@ -53,8 +74,8 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    // adapter에 아이템 추가
-    private fun manage_cocktail_detail() {
+    // adapter에 아이템 추가 //TODO("해당 cocktail detail가져오기")
+    private fun load_selected_cocktail_detail() {
         //TODO("data 추가")
         for (i in 1..30)
             adapter.items.add(CocktailDetail( selectedCocktail.ctName, R.drawable.cocktail_img2, 50.3))

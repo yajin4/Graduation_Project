@@ -18,7 +18,7 @@
         android:id="@+id/cocktail_photo_name_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="vertical">
 
         <ImageView
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/cocktail_img2" />
 
         <TextView
             android:id="@+id/ct_name_indetail"
@@ -34,7 +34,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="TextView" />
+            android:text="칵테일 이름" />
 
     </LinearLayout>
 
