@@ -62,6 +62,7 @@ class ARActivity : AppCompatActivity() {
         ContextCompat.checkSelfPermission(
             baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
+
     //사용자의 퍼미션 허용이 끝나면 자동 호출되는 함수. 허용 결과 확인
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
@@ -78,8 +79,6 @@ class ARActivity : AppCompatActivity() {
         }
     }
 
-    private fun takePhoto() {}
-
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
@@ -89,11 +88,17 @@ class ARActivity : AppCompatActivity() {
 
             // Preview
             //Initialize your Preview object, call build on it, get a surface provider from viewfinder, and then set it on the preview.
+            //카메라 화면 표시해줌
             val preview = Preview.Builder()
                 .build()
                 .also {
                     it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
                 } //Calls the specified function block with this value as its argument and returns this value.
+
+            //image capture 추가
+            //카메라 화면 캡쳐 기능
+            imageCapture = ImageCapture.Builder()
+                .build()
 
             // Select back camera as a default
             //Create a CameraSelector object and select DEFAULT_BACK_CAMERA.
@@ -106,13 +111,44 @@ class ARActivity : AppCompatActivity() {
 
                 // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview)
+                    this, cameraSelector, preview, imageCapture)
+                //activity는 이미 lifecycleOwner interface가 구현되어있음.
 
             } catch(exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
             }
 
         }, ContextCompat.getMainExecutor(this)) //listener 실행할 애
+    }
+
+    private fun takePhoto() {
+        // Get a stable reference of the modifiable image capture use case
+        val imageCapture = imageCapture ?: return
+
+        // Create time-stamped output file to hold the image
+        val photoFile = File(
+            outputDirectory,
+            SimpleDateFormat(FILENAME_FORMAT, Locale.US
+            ).format(System.currentTimeMillis()) + ".jpg")
+
+        // Create output options object which contains file + metadata
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        // Set up image capture listener, which is triggered after photo has
+        // been taken
+        imageCapture.takePicture(
+            outputOptions, ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback {
+                override fun onError(exc: ImageCaptureException) {
+                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                }
+
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val savedUri = Uri.fromFile(photoFile)
+                    val msg = "Photo capture succeeded: $savedUri"
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, msg)
+                }
+            })
     }
 
     private fun getOutputDirectory(): File {
@@ -126,7 +162,6 @@ class ARActivity : AppCompatActivity() {
         super.onDestroy()
         cameraExecutor.shutdown()
     }
-
 
     companion object {
         private const val TAG = "CameraXBasic"
