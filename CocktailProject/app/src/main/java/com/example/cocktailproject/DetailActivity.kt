@@ -36,7 +36,7 @@ class DetailActivity : AppCompatActivity() {
         }
         //TODO("Ar 버튼 구현 필요")
         binding.arBtn.setOnClickListener {
-            val i2 = Intent(this@DetailActivity, ARActivity::class.java)
+            val i2 = Intent(this@DetailActivity, AR2::class.java)
             startActivity(i2)
         }
     }
