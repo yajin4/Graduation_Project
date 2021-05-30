@@ -16,7 +16,8 @@ class AR2 : AppCompatActivity() {
 
     private lateinit var binding: ActivityAr2Binding
     private lateinit var camera:CameraView
-    private lateinit var selectedCocktail: Cocktail
+    private lateinit var selectedCocktail:Cocktail
+    private lateinit var selectedCocktailDetail: CocktailDetail
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,6 +26,7 @@ class AR2 : AppCompatActivity() {
 
         //intent 정보 받기
         selectedCocktail= intent.getSerializableExtra("selectedCocktail") as Cocktail
+        selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as CocktailDetail
 
         //카메라 기능 초기설정
         cameraInit()
@@ -38,11 +40,22 @@ class AR2 : AppCompatActivity() {
             val i=Intent(this@AR2,DetailActivity::class.java)
             i.putExtra("selectedCocktail",selectedCocktail)
             startActivity(i)
+            finish()
         }
         
         binding.nextLineBtn.setOnClickListener { 
             //TODO : 다음 한계선 출력 구현
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val i=Intent(this@AR2,DetailActivity::class.java)
+        i.putExtra("selectedCocktail",selectedCocktail)
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(i)
+        finish()
+
     }
 
     private fun cameraInit() {
