@@ -51,6 +51,6 @@ class MainActivity : AppCompatActivity() {
     private fun manage_cocktail() {
         //TODO("data 추가")
         for (i in 1..30)
-            adapter.items.add(Cocktail("img1",R.drawable.cocktail_img2))
+            adapter.items.add(Cocktail("img$i",R.drawable.cocktail_img2))
     }
 }
