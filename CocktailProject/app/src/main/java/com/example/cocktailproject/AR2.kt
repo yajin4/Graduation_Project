@@ -1,5 +1,6 @@
 package com.example.cocktailproject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -15,17 +16,33 @@ class AR2 : AppCompatActivity() {
 
     private lateinit var binding: ActivityAr2Binding
     private lateinit var camera:CameraView
-
+    private lateinit var selectedCocktail: Cocktail
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding= ActivityAr2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //intent 정보 받기
+        selectedCocktail= intent.getSerializableExtra("selectedCocktail") as Cocktail
+
         //카메라 기능 초기설정
         cameraInit()
 
+        //btn click event등록
+        btnInit()
+    }
 
+    private fun btnInit() {
+        binding.arBackBtn.setOnClickListener {
+            val i=Intent(this@AR2,DetailActivity::class.java)
+            i.putExtra("selectedCocktail",selectedCocktail)
+            startActivity(i)
+        }
+        
+        binding.nextLineBtn.setOnClickListener { 
+            //TODO : 다음 한계선 출력 구현
+        }
     }
 
     private fun cameraInit() {
