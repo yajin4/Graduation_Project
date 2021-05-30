@@ -33,11 +33,11 @@ class ARActivity : AppCompatActivity() {
         binding= ActivityArBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //camera 권한 체크
-        checkCamera()
+        checkCameraPerms()
 
     }
 
-    private fun checkCamera(){
+    private fun checkCameraPerms(){
         // Request camera permissions
         if (allPermissionsGranted()) {
             //permission 허용되어있을 시 카메라 시작
@@ -167,6 +167,6 @@ class ARActivity : AppCompatActivity() {
         private const val TAG = "CameraXBasic"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
     }
 }
