@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cocktailproject.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding:ActivityMainBinding
     lateinit var adapter: CtAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 val intent=Intent(this@MainActivity,DetailActivity::class.java)
                 intent.putExtra("selectedCocktail",data)
                 startActivity(intent)
+                finish()
             }
 
         }
