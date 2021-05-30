@@ -17,19 +17,21 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     lateinit var adapter: DtAdapter
     lateinit var selectedCocktail: Cocktail
+    lateinit var selectedCocktailDetail: CocktailDetail
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //intent로 전달받은 selected cocktail확인
         selectedCocktail=intent.getSerializableExtra("selectedCocktail") as Cocktail
 
-
-
         binding = ActivityDetailBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        //넘어온 칵테일 이름, 사진 출력
         load_selected_cocktail()
+        //detail data 출력
         show_detail()
+        //btn event 설정
         btnInit()
     }
 
@@ -37,16 +39,22 @@ class DetailActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             val intent= Intent(this@DetailActivity, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
         //TODO("camera권한 확인 후 안되었으면 설정 창으로 되었으면 ar2 activity로 이동")
         binding.arBtn.setOnClickListener {
-            val i2 = Intent(this@DetailActivity, AR2::class.java)
-            i2.putExtra("selectedCocktail",selectedCocktail)
-            startActivity(i2)
+            checkCameraPerms()
         }
     }
+    //뒤로가기 구현
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent= Intent(this@DetailActivity, MainActivity::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+        finish()
+    }
 
-    //넘어온 칵테일 이름, 사진 출력
     private fun load_selected_cocktail() {
         binding.ctImg.setImageResource(selectedCocktail.ctPhoto)
         binding.ctNameIndetail.text=selectedCocktail.ctName
@@ -82,18 +90,20 @@ class DetailActivity : AppCompatActivity() {
     // adapter에 아이템 추가 //TODO("해당 cocktail detail가져오기")
     private fun load_selected_cocktail_detail() {
         //TODO("data 추가")
+        selectedCocktailDetail= CocktailDetail(selectedCocktail.ctName,R.drawable.cocktail_img2,50.3)
         for (i in 1..30)
             adapter.items.add(CocktailDetail( selectedCocktail.ctName, R.drawable.cocktail_img2, i+0.01*i))
     }
 
-    private fun checkCamera(){
+    private fun checkCameraPerms(){
         // Request camera permissions
         if (allPermissionsGranted()) {
             //permission 허용되어있을 시 카메라 시작
             val i2 = Intent(this@DetailActivity, AR2::class.java)
             i2.putExtra("selectedCocktail",selectedCocktail)
+            i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
             startActivity(i2)
-            startCamera()
+            finish()
         } else {
             //권한 승인 요청
             ActivityCompat.requestPermissions(
@@ -116,11 +126,21 @@ class DetailActivity : AppCompatActivity() {
         IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) { //내가 지정한 code (camera에 지정해놓은 requestcode)
             if (allPermissionsGranted()) { //동의 했는지 확인
-                startCamera()
+                val i2 = Intent(this@DetailActivity, AR2::class.java)
+                i2.putExtra("selectedCocktail",selectedCocktail)
+                i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
+                startActivity(i2)
+                finish()
             } else {
-                Toast.makeText(this,
-                    "Camera Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this,
+//                    "Camera Permissions not granted by the user.",
+//                    Toast.LENGTH_SHORT).show()
+//                finish()
+                //퍼미션 거절 시 설정화면으로 이동
+                val i2 = Intent(this@DetailActivity, CameraPermission::class.java)
+                i2.putExtra("selectedCocktail",selectedCocktail)
+                i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
+                startActivity(i2)
                 finish()
             }
         }
@@ -130,6 +150,6 @@ class DetailActivity : AppCompatActivity() {
         private const val TAG = "CameraXBasic"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
     }
 }
