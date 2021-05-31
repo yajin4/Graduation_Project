@@ -95,7 +95,7 @@ class CameraPermission : AppCompatActivity() {
 //                finish()
                 //api30(안드11)부터 퍼미션 거절 시 다시 묻지 않음 상태가 되어 사용자가 직접해야됨
                                 Toast.makeText(this,
-                    "권한 대화상자가 표시되지 않을 시 직접 권한을 설정해주세요.",
+                    "권한 대화상자가 표시되지 않을 시\n직접 권한을 설정해주세요.",
                     Toast.LENGTH_SHORT).show()
 
             }

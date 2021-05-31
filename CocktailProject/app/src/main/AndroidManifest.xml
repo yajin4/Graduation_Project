@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailProject">
-        <activity android:name=".CameraPermission"></activity>
+        <activity android:name=".CameraPermission"/>
         <activity android:name=".AR2" />
         <activity android:name=".ARActivity" />
         <activity android:name=".DetailActivity" />
