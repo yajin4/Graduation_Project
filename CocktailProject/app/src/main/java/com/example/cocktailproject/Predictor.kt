@@ -127,7 +127,7 @@ class Predictor(val context:Context) {
 
         //TODO:실험구문 입니다 > task library https://www.tensorflow.org/lite/inference_with_metadata/task_library/image_segmenter
         val options=ImageSegmenter.ImageSegmenterOptions.builder().setOutputType(OutputType.CONFIDENCE_MASK).build()
-        val imageSegmenter=ImageSegmenter.createFromFile(context,"lite-model_deeplabv3_1_metadata_2.tflite")
+        val imageSegmenter=ImageSegmenter.createFromFile(context,"lite-model_deeplabv3-mobilenetv2_dm05-int8_1_default_2.tflite") //adk20은 mask값 오류가 나서 안되고 dm05 int8은 잘됩니다.
         val inputTensorImage=TensorImage()
         inputTensorImage.load(inputbitmap)
         val results = imageSegmenter.segment(inputTensorImage)
