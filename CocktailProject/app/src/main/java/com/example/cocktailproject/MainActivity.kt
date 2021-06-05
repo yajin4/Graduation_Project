@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cocktailproject.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding:ActivityMainBinding
     lateinit var adapter: CtAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 val intent=Intent(this@MainActivity,DetailActivity::class.java)
                 intent.putExtra("selectedCocktail",data)
                 startActivity(intent)
+                finish()
             }
 
         }
@@ -51,6 +51,6 @@ class MainActivity : AppCompatActivity() {
     private fun manage_cocktail() {
         //TODO("data 추가")
         for (i in 1..30)
-            adapter.items.add(Cocktail("img1",R.drawable.cocktail_img2))
+            adapter.items.add(Cocktail("img$i",R.drawable.cocktail_img2))
     }
 }

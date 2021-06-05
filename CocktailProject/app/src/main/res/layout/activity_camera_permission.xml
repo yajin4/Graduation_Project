@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#807878"
+    android:backgroundTint="#837D7D"
+    tools:context=".CameraPermission">
+
+    <Button
+        android:id="@+id/permission_back_btn"
+        android:layout_width="84dp"
+        android:layout_height="55dp"
+        android:text="뒤로가기"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/info_text"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="카메라,오디오 권한을\n모두 허용해야\nAR을 실행할 수 있습니다.\n\n설정 버튼을 클릭하여\n권한을 허용해주십시오.\n\n설정 버튼 클릭 후 거부 시\n애플리케이션 정보에서\n접 권한을 설정해야 합니다."
+        android:textSize="23sp"
+        android:gravity="center"
+        android:layout_marginTop="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/request_perms_btn"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:text="설정"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AR2"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/ar_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="뒤로가기" />
+
+    <com.otaliastudios.cameraview.CameraView
+        android:id="@+id/camera"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:keepScreenOn="true"
+        app:cameraMode="picture">
+        <ImageView
+            android:id="@+id/overlayimage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </com.otaliastudios.cameraview.CameraView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/sample"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="100dp"
+            tools:srcCompat="@tools:sample/avatars" />
+        <!--TODO: image지울거임 그 후 TextView Weight 1로 설정해야함, marginLeft 10dp-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="재료 무엇 넣으세요."
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/back"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <Button
+            android:id="@+id/next_line_btn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="다음 단계"
+            android:layout_marginRight="5dp"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

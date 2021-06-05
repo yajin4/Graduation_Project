@@ -3,6 +3,8 @@
     package="com.example.cocktailproject">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <uses-feature android:name="android.hardware.camera.any" />
 
     <application
@@ -12,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailProject">
-        <activity android:name=".ARActivity"></activity>
+        <activity android:name=".CameraPermission"/>
+        <activity android:name=".AR2" />
+        <activity android:name=".ARActivity" />
         <activity android:name=".DetailActivity" />
         <activity
             android:name=".MainActivity"
