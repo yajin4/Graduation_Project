@@ -20,6 +20,12 @@
         android:layout_weight="4"
         android:keepScreenOn="true"
         app:cameraMode="picture">
+        <ImageView
+            android:id="@+id/overlayimage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            tools:srcCompat="@tools:sample/avatars" />
 
     </com.otaliastudios.cameraview.CameraView>
 
