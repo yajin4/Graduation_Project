@@ -43,7 +43,7 @@ class Predictor(val context:Context) {
 
     private val channelSize = 3
 
-    private val numOfClasses=151
+    private val numOfClasses=3
     /** An instance of the driver class to run model inference with Tensorflow Lite.  *//*
     private val tflite: Interpreter = PredictorMeta.loadInterpreter(context)
 
@@ -126,8 +126,8 @@ class Predictor(val context:Context) {
     fun runModel(inputbitmap:Bitmap):Bitmap{
 
         //TODO:실험구문 입니다 > task library https://www.tensorflow.org/lite/inference_with_metadata/task_library/image_segmenter
-        val options=ImageSegmenter.ImageSegmenterOptions.builder().setOutputType(OutputType.CONFIDENCE_MASK).build()
-        val imageSegmenter=ImageSegmenter.createFromFile(context,"lite-model_deeplabv3-mobilenetv2_dm05-int8_1_default_2.tflite") //adk20은 mask값 오류가 나서 안되고 dm05 int8은 잘됩니다.
+        //val options=ImageSegmenter.ImageSegmenterOptions.builder().setOutputType(OutputType.CONFIDENCE_MASK).build()
+        val imageSegmenter=ImageSegmenter.createFromFile(context,"second_with_metadata.tflite") //adk20은 mask값 오류가 나서 안되고 dm05 int8은 잘됩니다.
         val inputTensorImage=TensorImage()
         inputTensorImage.load(inputbitmap)
         val results = imageSegmenter.segment(inputTensorImage)
@@ -141,7 +141,7 @@ class Predictor(val context:Context) {
         return maskBitmap
 
         //interpreter 생성
-        val fileDescriptor: AssetFileDescriptor = context.assets.openFd("lite-model_deeplabv3-mobilenetv2-ade20k_1_default_2.tflite")
+        val fileDescriptor: AssetFileDescriptor = context.assets.openFd("lite-model_mobilenetv2-dm05-coco_int8_1.tflite")
         val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
         val fileChannel: FileChannel = inputStream.getChannel()
         val startOffset = fileDescriptor.startOffset
@@ -180,21 +180,23 @@ class Predictor(val context:Context) {
         interpreter.run(input,modelOutput)
 
         modelOutput.rewind()
-        val probabilities = modelOutput.asFloatBuffer()
+
         try {
             val reader = BufferedReader(
-                InputStreamReader(context.assets.open("labels.txt"),"UTF-8")
+                InputStreamReader(context.assets.open("labelmap.txt"),"UTF-8")
             )
 
-            for (i in 0..150) {
-                val label: String = reader.readLine()
-                val probability = probabilities.get(i)
-                Log.i("label레이블",label+" : "+probability.toString())
-                //println("$label: $probability")
-            }
+
         } catch (e: IOException) {
             // File not found?
             Log.e("label파일없음",e.toString())
+        }
+        val probabilities = modelOutput.asFloatBuffer()
+        val outputBitmap=Bitmap.createBitmap(imageSizeX,imageSizeY,Bitmap.Config.ARGB_8888)
+        for(i in 0..imageSizeX){
+            for(j in 0..imageSizeY){
+
+            }
         }
 
     }
@@ -241,17 +243,18 @@ class Predictor(val context:Context) {
         var colors = IntArray(coloredLabels.size)
         var cnt = 0
         for (coloredLabel in coloredLabels) {
-            val rgb = coloredLabel.getArgb()
+            val rgb = coloredLabel.argb
             colors[cnt++] = Color.argb(128, Color.red(rgb), Color.green(rgb), Color.blue(rgb))
         }
         // Use completely transparent for the background color.
         colors[0] = Color.TRANSPARENT
-        for(color in colors)
-            Log.i("컬러",color.red.toString()+","+color.green.toString()+","+color.blue.toString())
+        //for(color in colors)
+            //Log.i("컬러",color.red.toString()+","+color.green.toString()+","+color.blue.toString())
 
         // Create the mask bitmap with colors and the set of detected labels.
-        val maskTensor = result.getMasks().get(0)
-        val maskArray = maskTensor.getBuffer().array()
+        val maskTensor = result.masks[0]
+        val maskArray = maskTensor.buffer.array()
+        Log.i("mask크기",maskArray.size.toString())
         val pixels = IntArray(maskArray.size)
         val itemsFound = HashMap<String, Int>()
         for (i in maskArray.indices) {
