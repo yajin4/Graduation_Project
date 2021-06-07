@@ -10,8 +10,8 @@
 
     <Button
         android:id="@+id/permission_back_btn"
-        android:layout_width="84dp"
-        android:layout_height="55dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="뒤로가기"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,7 +21,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="카메라,오디오 권한을\n모두 허용해야\nAR을 실행할 수 있습니다.\n\n설정 버튼을 클릭하여\n권한을 허용해주십시오.\n\n설정 버튼 클릭 후 거부 시\n애플리케이션 정보에서\n접 권한을 설정해야 합니다."
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:gravity="center"
         android:layout_marginTop="150dp"
         app:layout_constraintEnd_toEndOf="parent"
