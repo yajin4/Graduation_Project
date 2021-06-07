@@ -86,7 +86,7 @@ class AR2 : AppCompatActivity() {
                 //더 작은 용량의 snapshot으로 운영 TODO:잘 안될 경우 바꾸기
                 camera.takePictureSnapshot()
                 //camera.takePicture()
-                mainHandler.postDelayed(this,2*1000)
+                mainHandler.postDelayed(this,1500)
             }
         })
 
