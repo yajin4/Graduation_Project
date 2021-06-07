@@ -1,5 +1,8 @@
 package com.example.cocktailproject
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,13 +34,16 @@ RecyclerView.Adapter<DtAdapter.DtViewHolder>(){
         }
     }
 
+    private lateinit var cxt: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DtViewHolder {
-        var v=LayoutInflater.from(parent.context).inflate(R.layout.dtlist_instance,parent,false)
+        cxt=parent.context
+        val v=LayoutInflater.from(parent.context).inflate(R.layout.dtlist_instance,parent,false)
         return DtViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: DtViewHolder, position: Int) {
-        holder.ing_img.setImageResource(items[position].Ing_Photo)
+        val dBmp= BitmapFactory.decodeStream(cxt.assets.open(items[position].Ing_Photo))
+        holder.ing_img.setImageBitmap(dBmp)
         holder.ing_name.text=items[position].Ing_name
         holder.ing_amount.text=items[position].Ing_amount.toString()
     }

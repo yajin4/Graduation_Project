@@ -58,7 +58,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun load_selected_cocktail() {
-        binding.ctImg.setImageResource(selectedCocktail.ctPhoto)
+        val cBmp= BitmapFactory.decodeStream(assets.open(selectedCocktail.ctPhoto))
+        binding.ctImg.setImageBitmap(cBmp)
         binding.ctNameIndetail.text=selectedCocktail.ctName
     }
 
