@@ -14,7 +14,7 @@ class CameraPermission : AppCompatActivity() {
 
     lateinit var binding:ActivityCameraPermissionBinding
     private lateinit var selectedCocktail:Cocktail
-    private lateinit var selectedCocktailDetail: CocktailDetail
+    private lateinit var selectedCocktailDetail: ArrayList<CocktailDetail>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class CameraPermission : AppCompatActivity() {
         setContentView(binding.root)
         //intent 받기
         selectedCocktail= intent.getSerializableExtra("selectedCocktail") as Cocktail
-        selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as CocktailDetail
+        selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as ArrayList<CocktailDetail>
         //btn event설정
         btnInit()
         //권한 요청

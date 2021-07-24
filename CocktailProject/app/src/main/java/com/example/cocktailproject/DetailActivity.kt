@@ -3,6 +3,8 @@ package com.example.cocktailproject
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -17,7 +19,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     lateinit var adapter: DtAdapter
     lateinit var selectedCocktail: Cocktail
-    lateinit var selectedCocktailDetail: CocktailDetail
+    lateinit var selectedCocktailDetail: ArrayList<CocktailDetail>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,7 +58,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun load_selected_cocktail() {
-        binding.ctImg.setImageResource(selectedCocktail.ctPhoto)
+        val cBmp= BitmapFactory.decodeStream(assets.open(selectedCocktail.ctPhoto))
+        binding.ctImg.setImageBitmap(cBmp)
         binding.ctNameIndetail.text=selectedCocktail.ctName
     }
 
@@ -90,9 +93,12 @@ class DetailActivity : AppCompatActivity() {
     // adapter에 아이템 추가 //TODO("해당 cocktail detail가져오기")
     private fun load_selected_cocktail_detail() {
         //TODO("data 추가")
-        selectedCocktailDetail= CocktailDetail(selectedCocktail.ctName,R.drawable.cocktail_img2,50.3)
-        for (i in 1..30)
-            adapter.items.add(CocktailDetail( selectedCocktail.ctName, R.drawable.cocktail_img2, i+0.01*i))
+        selectedCocktailDetail=ArrayList()
+        for (i in 0..selectedCocktail.ctDetail.size-1) {
+            adapter.items.add(selectedCocktail.ctDetail[i])
+            selectedCocktailDetail.add(selectedCocktail.ctDetail[i])
+        }
+
     }
 
     private fun checkCameraPerms(){

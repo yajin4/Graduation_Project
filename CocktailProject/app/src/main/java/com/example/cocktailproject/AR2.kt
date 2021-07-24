@@ -1,11 +1,11 @@
 package com.example.cocktailproject
 
 import android.content.Intent
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import com.example.cocktailproject.databinding.ActivityAr2Binding
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
@@ -17,7 +17,7 @@ class AR2 : AppCompatActivity() {
     private lateinit var binding: ActivityAr2Binding
     private lateinit var camera:CameraView
     private lateinit var selectedCocktail:Cocktail
-    private lateinit var selectedCocktailDetail: CocktailDetail
+    private lateinit var selectedCocktailDetail: ArrayList<CocktailDetail>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,7 +26,7 @@ class AR2 : AppCompatActivity() {
 
         //intent 정보 받기
         selectedCocktail= intent.getSerializableExtra("selectedCocktail") as Cocktail
-        selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as CocktailDetail
+        selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as ArrayList<CocktailDetail>
 
         //카메라 기능 초기설정
         cameraInit()
@@ -34,6 +34,8 @@ class AR2 : AppCompatActivity() {
         //btn click event등록
         btnInit()
     }
+
+    //TODO: cameraOrientation확인
 
     private fun btnInit() {
         binding.arBackBtn.setOnClickListener {
@@ -67,14 +69,14 @@ class AR2 : AppCompatActivity() {
         camera.addCameraListener(object:CameraListener(){
             override fun onPictureTaken(result: PictureResult) {
                 //Toast.makeText(applicationContext,"take snapshot "+result.format.toString(),Toast.LENGTH_SHORT).show() //JPEG
+                result.toBitmap(513,513){
+                    //513으로 변환해서 input주기
+                    //binding.sample.setImageBitmap(it)
+                    if (it != null) {
+                        imageProcess(it)
+                    }
 
-                result.toBitmap {
-                    //잘 찍히느지 확인용 코드 . TODO:삭제요망
-                    binding.sample.setImageBitmap(it)
-
-                    //bitmap 생성되었음. TODO:변환 후 모델에 넣고 돌리면 됨.
                 }
-
             }
         })
         //2초마다 한번씩 불리게 쓰레드 반복실행
@@ -84,9 +86,20 @@ class AR2 : AppCompatActivity() {
                 //더 작은 용량의 snapshot으로 운영 TODO:잘 안될 경우 바꾸기
                 camera.takePictureSnapshot()
                 //camera.takePicture()
-                mainHandler.postDelayed(this,2*1000)
+                mainHandler.postDelayed(this,1500)
             }
         })
 
+    }
+
+    //process image DeepLab TensorflowLite Model
+    private fun imageProcess(result: Bitmap) {
+        //predictor 객체 생성
+        val predictor=Predictor(this)
+        //runmodel : masked bitmap반환
+        val maskedBitmap=predictor.runModel(result)
+        //set ovelay image
+        binding.sample.setImageBitmap(maskedBitmap)
+        binding.overlayimage.setImageBitmap(maskedBitmap)
     }
 }
