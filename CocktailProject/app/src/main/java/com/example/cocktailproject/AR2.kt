@@ -17,7 +17,7 @@ class AR2 : AppCompatActivity() {
     private lateinit var binding: ActivityAr2Binding
     private lateinit var camera:CameraView
     private lateinit var selectedCocktail:Cocktail
-    private lateinit var selectedCocktailDetail: CocktailDetail
+    private lateinit var selectedCocktailDetail: ArrayList<CocktailDetail>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,7 +26,7 @@ class AR2 : AppCompatActivity() {
 
         //intent 정보 받기
         selectedCocktail= intent.getSerializableExtra("selectedCocktail") as Cocktail
-        selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as CocktailDetail
+        selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as ArrayList<CocktailDetail>
 
         //카메라 기능 초기설정
         cameraInit()
@@ -86,7 +86,7 @@ class AR2 : AppCompatActivity() {
                 //더 작은 용량의 snapshot으로 운영 TODO:잘 안될 경우 바꾸기
                 camera.takePictureSnapshot()
                 //camera.takePicture()
-                mainHandler.postDelayed(this,2*1000)
+                mainHandler.postDelayed(this,1500)
             }
         })
 

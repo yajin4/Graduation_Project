@@ -4,24 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp">
+    android:paddingTop="10dp"
+    android:paddingBottom="5dp">
 
 
-    <Button
+    <ImageView
         android:id="@+id/ct_img_btn"
-        android:layout_width="175dp"
+        android:layout_width="match_parent"
         android:layout_height="175dp"
+        android:padding="5dp"
         android:layout_gravity="center"
-        android:background="@drawable/back" />
+        />
 
     <TextView
         android:id="@+id/ct_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:background="@drawable/back"
         android:padding="5dp"
-        android:text="cocktail name"
-        android:textSize="14sp" />
+        android:text="PineappleSunriseMimosas"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textSize="12sp" />
 </LinearLayout>

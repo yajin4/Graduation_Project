@@ -1,16 +1,19 @@
 package com.example.cocktailproject
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cocktailproject.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
-    lateinit var adapter: CtAdapter
+    private lateinit var adapter: CtAdapter
+    private val cocktailNum=1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // https://developer.android.com/topic/libraries/view-binding : kotlin 1.4.20부터 findviewbyid용으로 썼던 android-kotlin-extensions 대신 view binding으로 사용됨
@@ -34,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 data: Cocktail,
                 position: Int
             ) {
-                Toast.makeText(this@MainActivity,data.toString(),Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@MainActivity,data.toString(),Toast.LENGTH_SHORT).show()
                 // Detail activity로 이동.
                 val intent=Intent(this@MainActivity,DetailActivity::class.java)
                 intent.putExtra("selectedCocktail",data)
@@ -50,7 +53,31 @@ class MainActivity : AppCompatActivity() {
     //adapter에 아이템 추가
     private fun manage_cocktail() {
         //TODO("data 추가")
-        for (i in 1..30)
-            adapter.items.add(Cocktail("img$i",R.drawable.cocktail_img2))
+        //cocktail(name,img,List<CocktailDetail>)
+        //txt 등에 정보 저장해놓고 불러오기
+        //code snippet
+        try {
+            for (i in 1..cocktailNum){
+                //load detail info
+                    val tempCocktailDetail=ArrayList<CocktailDetail>()
+                for (j in 0..10){
+                    //val dBmp=BitmapFactory.decodeStream(assets.open(("cocktailImage/PineappleSunriseMimosas.jpg")))
+                    tempCocktailDetail.add(CocktailDetail("$j","cocktailImage/"+"PineappleSunriseMimosas.jpg",j*10+0.01))
+                }
+                //load image
+                //val cBmp=BitmapFactory.decodeStream(assets.open("cocktailImage/PineappleSunriseMimosas.jpg"))
+                for( j in 0..30)
+                    adapter.items.add(Cocktail("Pineapple Sunrise\nMimosas","cocktailImage/"+"PineappleSunriseMimosas.jpg",tempCocktailDetail))
+
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("asset문제",e.toString())
+        }
+        assets.list("cocktailImage")?.forEach {
+            Log.i("asset폴더",it)
+        }
+
     }
 }
