@@ -15,9 +15,11 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.lang.Exception
 
 
 //permission은 라이브러리에 내장되어있음.
@@ -167,7 +169,26 @@ class AR2 : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 // TODO("Not yet implemented")
-                Log.i("connect tag","success!"+ response.body?.string())
+                Log.i("connect tag","success!")
+                //response의 segmap key의 2차원 배열 값을 arr에 저장함
+                val json=JSONObject(response.body!!.string())
+                val jsonarr=json.getJSONArray("segmap")
+                // 2차원 배열 저장할 변수
+                var arr = ArrayList<ArrayList<Int>>()
+
+                for (i in 0 until jsonarr.length()){
+                    arr.add(ArrayList())
+
+                    for (j in 0 until jsonarr.getJSONArray(i).length()){
+                        try {
+                            arr[i].add(jsonarr.getJSONArray(i).getInt(j))
+                        }
+                        catch(e:Exception){
+                            Log.i("connect tag i : ",i.toString())
+                            Log.i("connect tag j : ",j.toString())
+                        }
+                    }
+                }
             }
         })
     }
