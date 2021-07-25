@@ -2,6 +2,7 @@ package com.example.cocktailproject
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -29,6 +30,8 @@ class AR2 : AppCompatActivity() {
     private lateinit var camera:CameraView
     private lateinit var selectedCocktail:Cocktail
     private lateinit var selectedCocktailDetail: ArrayList<CocktailDetail>
+    private val classNum=3
+    private val color=IntArray(classNum)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,14 +42,22 @@ class AR2 : AppCompatActivity() {
         selectedCocktail= intent.getSerializableExtra("selectedCocktail") as Cocktail
         selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as ArrayList<CocktailDetail>
 
-        //서버 연결
-        // connectServer()
 
+        init()
+    }
+
+    private fun init(){
         //카메라 기능 초기설정
         cameraInit()
 
         //btn click event등록
         btnInit()
+
+        // color값 초기화
+        color[0]= Color.TRANSPARENT
+        // alpha : 128 == 반투명 / 1=cup 2=fluid
+        color[1]=Color.argb(128,Color.red(255),Color.blue(0),Color.green(0))
+        color[2]=Color.argb(128,Color.red(0),Color.blue(255),Color.green(0))
     }
 
     //TODO: cameraOrientation확인
@@ -168,20 +179,19 @@ class AR2 : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                // TODO("Not yet implemented")
                 Log.i("connect tag","success!")
                 //response의 segmap key의 2차원 배열 값을 arr에 저장함
                 val json=JSONObject(response.body!!.string())
-                val jsonarr=json.getJSONArray("segmap")
+                val jsonArr=json.getJSONArray("segmap")
                 // 2차원 배열 저장할 변수
                 var arr = ArrayList<ArrayList<Int>>()
 
-                for (i in 0 until jsonarr.length()){
+                for (i in 0 until jsonArr.length()){
                     arr.add(ArrayList())
 
-                    for (j in 0 until jsonarr.getJSONArray(i).length()){
+                    for (j in 0 until jsonArr.getJSONArray(i).length()){
                         try {
-                            arr[i].add(jsonarr.getJSONArray(i).getInt(j))
+                            arr[i].add(jsonArr.getJSONArray(i).getInt(j))
                         }
                         catch(e:Exception){
                             Log.i("connect tag i : ",i.toString())
@@ -189,7 +199,40 @@ class AR2 : AppCompatActivity() {
                         }
                     }
                 }
+
+                printSegmap(arr)
             }
         })
+    }
+
+    private fun printSegmap(arr: ArrayList<ArrayList<Int>>) {
+        // seg bitmap 만들기 위한 color 저장 (2차원 배열 버전)
+//        val pixels=ArrayList<ArrayList<Int>>()
+//        for (i in 0 until arr.size){
+//            pixels.add(ArrayList())
+//            for (j in 0 until arr[i].size){
+//                pixels[i].add(color[arr[i][j]])
+//            }
+//        }
+        // seg bitmap 만들기 위한 color 저장 (1차원 배열 버전)
+        val width=arr[0].size
+        val height=arr.size
+        val pixels=IntArray(width * height)
+        for (i in 0 until height){
+            for (j in 0 until width){
+                pixels[i*(height)+j]=color[arr[i][j]]
+            }
+        }
+        val maskBitmap = Bitmap.createBitmap(
+            pixels, width, height,
+            Bitmap.Config.ARGB_8888
+        )
+        val scaledBitmap=Bitmap.createScaledBitmap(maskBitmap, width, height, true)
+        // CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
+        runOnUiThread {
+            binding.sample.setImageBitmap(scaledBitmap)
+            binding.overlayimage.setImageBitmap(scaledBitmap)
+        }
+
     }
 }
