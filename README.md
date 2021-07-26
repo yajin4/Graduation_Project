@@ -1,29 +1,25 @@
-
-
 # Graduation_Project
-Cocktail AR maker
-<br/><br/>
-## feature (prototype)
+Cocktail AR maker  
+&nbsp;
+
+## Feature (prototype)
 - cocktail list  
 
+&nbsp;
 ![main_screen](https://user-images.githubusercontent.com/51369785/123541164-04202a00-d77e-11eb-8b6a-d69bbb6bf6ea.jpg)
-
+&nbsp;
 - selected cocktail detail info  
 
-![detail_screen](https://user-images.githubusercontent.com/51369785/123541165-05e9ed80-d77e-11eb-8861-edbc900e3fbe.jpg)
-
+&nbsp;
+![detail_screen](https://user-images.githubusercontent.com/51369785/123541165-05e9ed80-d77e-11eb-8861-edbc900e3fbe.jpg)  
+&nbsp;
 - recognition using deeplab (cup, fluid)  
 
-![recog_cup](https://user-images.githubusercontent.com/51369785/123540948-96bfc980-d77c-11eb-9f41-1cc7f0b1902d.png)
-![recog_fluid](https://user-images.githubusercontent.com/51369785/123540965-a9d29980-d77c-11eb-968d-fe525eecab33.png)
-
+&nbsp;
+![recog1](https://user-images.githubusercontent.com/51369785/126936015-d9224fc4-72b7-4fd0-96ce-9e937e9500f1.jpg)
+![recog2](https://user-images.githubusercontent.com/51369785/126936024-636dc482-0cd3-43de-a9ff-6eacf842a141.jpg)
+&nbsp;
 
 ## update
-### 0605 app update : deeplab data 100개 학습 모델 적용(mobilenetv2)
-### 1. dm 적용 
-100개 : https://drive.google.com/file/d/1QbH3APbQrG4XqCRao5K-HcD5qBTbLvrv/view?usp=sharing  
-200개 : https://drive.google.com/file/d/1H9IG3X3GRJfRu3ZHn2P9d-zucNB2iupq/view?usp=sharing
-### 2. dm 적용 x 
-100개 : https://drive.google.com/file/d/1FTXyWqVI2Pc_gBURjKgM28EaYfNpQSy9/view?usp=sharing  
-200개 : https://drive.google.com/file/d/1RROFO0YwKSUtu2CabvP-E8YW4vzJcaXY/view?usp=sharing
-
+### 0726 추론 서버 연결
+[apk download](https://drive.google.com/file/d/1u9kefKPungmW2D1Ub4iYgzbhaOigycI7/view?usp=sharing)  
