@@ -124,7 +124,7 @@ class AR2 : AppCompatActivity() {
                 //더 작은 용량의 snapshot으로 운영 TODO:잘 안될 경우 바꾸기
                 camera.takePictureSnapshot()
                 //camera.takePicture()
-                mainHandler.postDelayed(this,10000)
+                mainHandler.postDelayed(this,5000)
             }
         })
 
@@ -206,7 +206,7 @@ class AR2 : AppCompatActivity() {
     }
 
     private fun printSegmap(arr: ArrayList<ArrayList<Int>>) {
-        // seg bitmap 만들기 위한 color 저장 (2차원 배열 버전)
+        // seg bitmap 만들기 위한 color 저장 (2차원 배열 버전) > 2차원 배열은 bitmap createBitmap의 인자로 줄 수가 없어서 1차원으로 수정
 //        val pixels=ArrayList<ArrayList<Int>>()
 //        for (i in 0 until arr.size){
 //            pixels.add(ArrayList())
