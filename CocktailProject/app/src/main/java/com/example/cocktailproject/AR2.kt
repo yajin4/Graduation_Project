@@ -2,6 +2,7 @@ package com.example.cocktailproject
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -17,9 +18,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+import java.io.*
 import java.lang.Exception
 
 
@@ -30,7 +29,7 @@ class AR2 : AppCompatActivity() {
     private lateinit var camera:CameraView
     private lateinit var selectedCocktail:Cocktail
     private lateinit var selectedCocktailDetail: ArrayList<CocktailDetail>
-    private val classNum=3
+    private val classNum=4
     private val color=IntArray(classNum)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +57,7 @@ class AR2 : AppCompatActivity() {
         // alpha : 128 == 반투명 / 1=cup 2=fluid
         color[1]=Color.argb(128,Color.red(255),Color.blue(0),Color.green(0))
         color[2]=Color.argb(128,Color.red(0),Color.blue(255),Color.green(0))
+        color[3]=Color.argb(255,Color.red(0),Color.blue(0),Color.green(0))
     }
 
     //TODO: cameraOrientation확인
@@ -94,27 +94,26 @@ class AR2 : AppCompatActivity() {
         camera.addCameraListener(object:CameraListener(){
             override fun onPictureTaken(result: PictureResult) {
                 //Toast.makeText(applicationContext,"take snapshot "+result.format.toString(),Toast.LENGTH_SHORT).show() //JPEG
-                result.toBitmap(513,513){
+/*                result.toBitmap(513,513){
                     //513으로 변환해서 input주기
                     //binding.sample.setImageBitmap(it)
                     if (it != null) {
                         //imageProcess(it)
                         var tempfile=File(filesDir.toString()+"current.jpg")
                         val os= FileOutputStream(tempfile)
-                        it.compress(Bitmap.CompressFormat.JPEG,100,os)
+                        it.compress(Bitmap.CompressFormat.PNG,100,os)
                         os.flush()
                         os.close()
                         connectServer(tempfile)
                     }
-                }
+                }*/
 
-//                var file=File(filesDir.toString()+"current.jpg")
-//                result.toFile(file){
-//                    if (it!=null){
-//                        connectServer(it)
-//                        Log.i("connect tag","connected!!!!"+file.isFile.toString())
-//                    }
-//                }
+                var file=File(filesDir.toString()+"current.jpg")
+                result.toFile(file){
+                    if (it!=null){
+                        connectServer(it)
+                    }
+                }
             }
         })
         //2초마다 한번씩 불리게 쓰레드 반복실행
