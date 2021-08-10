@@ -7,7 +7,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cocktailproject.databinding.ActivityAr2Binding
 import com.otaliastudios.cameraview.CameraListener
@@ -20,6 +22,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.*
 import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 //permission은 라이브러리에 내장되어있음.
@@ -123,7 +127,7 @@ class AR2 : AppCompatActivity() {
                 //더 작은 용량의 snapshot으로 운영 TODO:잘 안될 경우 바꾸기
                 camera.takePictureSnapshot()
                 //camera.takePicture()
-                mainHandler.postDelayed(this,5000)
+                mainHandler.postDelayed(this,3000)
             }
         })
 
@@ -143,17 +147,16 @@ class AR2 : AppCompatActivity() {
     // connect server
     private fun connectServer(currentShot:File) {
         val ipv4Address="118.223.16.156"
-        val portNum="5000"
+        val portNum="8081"
         val postUrl = "http://"+ipv4Address+":"+portNum+"/"
 
-        // bitmap arg로 받기
-        val postBodyText="hello"
-        //val requestBody=postBodyText.toRequestBody()
-        //experiment
+        // file arg로 받기
+        Log.i("unique Andoird ID",Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID))
+        val uniqueID = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         val requestBody=currentShot.asRequestBody("image/*".toMediaTypeOrNull())
         val postBodyImage=MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("image","inf.jpg",requestBody)
+            .addFormDataPart("image","inf"+uniqueID+".jpg",requestBody)
             .build()
         postRequest(postUrl, postBodyImage)
 
@@ -171,10 +174,9 @@ class AR2 : AppCompatActivity() {
                 Log.i("connect tag","failed!!!!"+e.toString())
                 // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
                 // ui thread == main thread
-//                runOnUiThread {
-//                    val responseText = findViewById<TextView>(R.id.responseText)
-//                    responseText.text = "Failed to Connect to Server"
-//                }
+                runOnUiThread {
+                    Toast.makeText(this@AR2,"서버와의 연결에 실패하였습니다.",Toast.LENGTH_SHORT)
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -228,6 +230,7 @@ class AR2 : AppCompatActivity() {
         )
         val scaledBitmap=Bitmap.createScaledBitmap(maskBitmap, width, height, true)
         // CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
+        // In order to access the TextView,ImageVuew(etc..) inside the UI thread, the code is executed inside runOnUiThread()
         runOnUiThread {
             binding.sample.setImageBitmap(scaledBitmap)
             binding.overlayimage.setImageBitmap(scaledBitmap)
