@@ -175,7 +175,7 @@ class AR2 : AppCompatActivity() {
                 // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
                 // ui thread == main thread
                 runOnUiThread {
-                    Toast.makeText(this@AR2,"서버와의 연결에 실패하였습니다.",Toast.LENGTH_SHORT)
+                    Toast.makeText(this@AR2,"서버와의 연결에 실패하였습니다.",Toast.LENGTH_SHORT).show()
                 }
             }
 
