@@ -62,6 +62,8 @@ class AR2 : AppCompatActivity() {
         color[1]=Color.argb(128,Color.red(255),Color.blue(0),Color.green(0))
         color[2]=Color.argb(128,Color.red(0),Color.blue(255),Color.green(0))
         color[3]=Color.argb(255,Color.red(0),Color.blue(0),Color.green(0))
+
+        binding.instruction.text= "서버 연결 중입니다."
     }
 
     //TODO: cameraOrientation확인
@@ -148,7 +150,7 @@ class AR2 : AppCompatActivity() {
     private fun connectServer(currentShot:File) {
         val ipv4Address="118.223.16.156"
         val portNum="8081"
-        val postUrl = "http://"+ipv4Address+":"+portNum+"/"
+        val postUrl = "http://$ipv4Address:$portNum/"
 
         // file arg로 받기
         Log.i("unique Andoird ID",Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID))
@@ -156,7 +158,7 @@ class AR2 : AppCompatActivity() {
         val requestBody=currentShot.asRequestBody("image/*".toMediaTypeOrNull())
         val postBodyImage=MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("image","inf"+uniqueID+".jpg",requestBody)
+            .addFormDataPart("image", "inf$uniqueID.jpg",requestBody)
             .build()
         postRequest(postUrl, postBodyImage)
 
@@ -175,12 +177,15 @@ class AR2 : AppCompatActivity() {
                 // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
                 // ui thread == main thread
                 runOnUiThread {
-                    Toast.makeText(this@AR2,"서버와의 연결에 실패하였습니다.",Toast.LENGTH_SHORT).show()
+                    binding.instruction.text = "서버 연결 실패"
                 }
             }
 
             override fun onResponse(call: Call, response: Response) {
                 Log.i("connect tag","success!")
+                runOnUiThread {
+                    binding.instruction.text = "서버 연결 성공"
+                }
                 //response의 segmap key의 2차원 배열 값을 arr에 저장함
                 val json=JSONObject(response.body!!.string())
                 val jsonArr=json.getJSONArray("segmap")

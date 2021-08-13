@@ -48,6 +48,7 @@
         <!--TODO: image지울거임 그 후 TextView Weight 1로 설정해야함, marginLeft 10dp-->
 
         <TextView
+            android:id="@+id/instruction"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="2"
