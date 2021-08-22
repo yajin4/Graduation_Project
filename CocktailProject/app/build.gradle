@@ -68,4 +68,7 @@ dependencies {
 
     //공식예제앱에서 segmentation결과 이용할 때 썻던
     implementation 'org.tensorflow:tensorflow-lite-task-vision:0.2.0'
+
+    //server connect
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
 }
