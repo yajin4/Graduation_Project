@@ -3,14 +3,12 @@ package com.example.cocktailproject
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cocktailproject.databinding.ActivityAr2Binding
 import com.example.cocktailproject.dialogFragments.ARGuideDialogFragment
@@ -20,14 +18,11 @@ import com.otaliastudios.cameraview.PictureResult
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.*
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.system.measureTimeMillis
-
 
 
 //permission은 라이브러리에 내장되어있음.
@@ -39,6 +34,7 @@ class AR2 : AppCompatActivity() {
     private lateinit var selectedCocktailDetail: ArrayList<CocktailDetail>
     private val classNum=4
     private val color=IntArray(classNum)
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -107,21 +103,7 @@ class AR2 : AppCompatActivity() {
         //사진 찍은거 event listener
         camera.addCameraListener(object:CameraListener(){
             override fun onPictureTaken(result: PictureResult) {
-                //Toast.makeText(applicationContext,"take snapshot "+result.format.toString(),Toast.LENGTH_SHORT).show() //JPEG
-/*                result.toBitmap(513,513){
-                    //513으로 변환해서 input주기
-                    //binding.sample.setImageBitmap(it)
-                    if (it != null) {
-                        //imageProcess(it)
-                        var tempfile=File(filesDir.toString()+"current.jpg")
-                        val os= FileOutputStream(tempfile)
-                        it.compress(Bitmap.CompressFormat.PNG,100,os)
-                        os.flush()
-                        os.close()
-                        connectServer(tempfile)
-                    }
-                }*/
-
+                //지정한 시간마다 캡처를 하여 file 형태로 변환하고 서버에 전송함
                 val file=File(filesDir.toString()+"current.jpg")
                 result.toFile(file){
                     if (it!=null){
@@ -145,7 +127,7 @@ class AR2 : AppCompatActivity() {
     }
 
     //process image DeepLab TensorflowLite Model
-    private fun imageProcess(result: Bitmap) {
+/*    private fun imageProcess(result: Bitmap) {
         //predictor 객체 생성
         val predictor=Predictor(this)
         //runmodel : masked bitmap반환
@@ -153,17 +135,17 @@ class AR2 : AppCompatActivity() {
         //set ovelay image
         binding.sample.setImageBitmap(maskedBitmap)
         binding.overlayimage.setImageBitmap(maskedBitmap)
-    }
+    }*/
 
     // connect server
     @SuppressLint("HardwareIds")
     private fun connectServer(currentShot:File) {
+        // 서버 주소와 port 지정
         val ipv4Address="118.223.16.156"
         val portNum="8081"
         val postUrl = "http://$ipv4Address:$portNum/"
 
-        // file arg로 받기
-        Log.i("unique Andoird ID",Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID))
+        // request msg 생성. 파일을 첨부한 body를 생성.
         val uniqueID = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         val requestBody=currentShot.asRequestBody("image/*".toMediaTypeOrNull())
         val postBodyImage=MultipartBody.Builder()
@@ -230,15 +212,7 @@ class AR2 : AppCompatActivity() {
     }
 
     private fun printSegmap(arr: ArrayList<ArrayList<Int>>) {
-        // seg bitmap 만들기 위한 color 저장 (2차원 배열 버전) > 2차원 배열은 bitmap createBitmap의 인자로 줄 수가 없어서 1차원으로 수정
-//        val pixels=ArrayList<ArrayList<Int>>()
-//        for (i in 0 until arr.size){
-//            pixels.add(ArrayList())
-//            for (j in 0 until arr[i].size){
-//                pixels[i].add(color[arr[i][j]])
-//            }
-//        }
-        // seg bitmap 만들기 위한 color 저장 (1차원 배열 버전)
+        // seg bitmap 만들기 위해 각 class값에 맞는 color를 pixel 배열에 저장 (1차원 배열 버전). pixel color값으로 bitmap을 생성하고 화면에 출력 
         val width=arr[0].size
         val height=arr.size
         val pixels=IntArray(width * height)
