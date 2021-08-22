@@ -1,5 +1,6 @@
 package com.example.cocktailproject
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -12,6 +13,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cocktailproject.databinding.ActivityAr2Binding
+import com.example.cocktailproject.dialogFragments.ARGuideDialogFragment
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
@@ -50,6 +52,10 @@ class AR2 : AppCompatActivity() {
     }
 
     private fun init(){
+        //안내문 dialog
+        val newFragment = ARGuideDialogFragment()
+        newFragment.show(supportFragmentManager,"guide fragment show")
+
         //카메라 기능 초기설정
         cameraInit()
 
@@ -114,7 +120,7 @@ class AR2 : AppCompatActivity() {
                     }
                 }*/
 
-                var file=File(filesDir.toString()+"current.jpg")
+                val file=File(filesDir.toString()+"current.jpg")
                 result.toFile(file){
                     if (it!=null){
                         connectServer(it)
@@ -147,6 +153,7 @@ class AR2 : AppCompatActivity() {
     }
 
     // connect server
+    @SuppressLint("HardwareIds")
     private fun connectServer(currentShot:File) {
         val ipv4Address="118.223.16.156"
         val portNum="8081"
