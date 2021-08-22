@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">CocktailProject</string>
     <string name="first_activity">Cocktail List</string>
+    <string name="guide">컵과 액체의 인식이\n보다 정확하게 되도록\n다음과 같이 컵을 세팅해주세요.\n\n1. 컵의 정면을 촬영해주세요\n2. 무늬가 없는 컵을 사용해주세요\n </string>
+    <string name="guide_title">안내문</string>
 </resources>

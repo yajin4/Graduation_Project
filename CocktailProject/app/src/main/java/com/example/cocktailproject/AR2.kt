@@ -29,6 +29,7 @@ import kotlin.collections.ArrayList
 import kotlin.system.measureTimeMillis
 
 
+
 //permission은 라이브러리에 내장되어있음.
 class AR2 : AppCompatActivity() {
 
@@ -137,6 +138,7 @@ class AR2 : AppCompatActivity() {
                 camera.takePictureSnapshot()
                 //camera.takePicture()
                 mainHandler.postDelayed(this,5000)
+
             }
         })
 
@@ -199,6 +201,7 @@ class AR2 : AppCompatActivity() {
                 val jsonArr=json.getJSONArray("segmap")
                 // 2차원 배열 저장할 변수
                 var arr = ArrayList<ArrayList<Int>>()
+
                 val elapsedTime= measureTimeMillis {
                     // call you method from here or add any other statements
                     for (i in 0 until jsonArr.length()){
@@ -221,6 +224,7 @@ class AR2 : AppCompatActivity() {
                     printSegmap(arr)
                 }
                 Log.i("elapsed seg Time",segtime.toString())
+
             }
         })
     }
