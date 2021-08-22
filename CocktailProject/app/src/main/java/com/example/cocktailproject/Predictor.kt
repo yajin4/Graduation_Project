@@ -20,7 +20,7 @@ class Predictor(val context:Context) {
         //val options=ImageSegmenter.ImageSegmenterOptions.builder().setOutputType(OutputType.CONFIDENCE_MASK).build()
         val imageSegmenter = ImageSegmenter.createFromFile(
             context,
-            "model0712_nodm_with_metadata.tflite"
+            "model0715_nodm_with_metadata.tflite"
         ) //adk20은 mask값 오류가 나서 안되고 dm05 int8은 잘됩니다.
         val inputTensorImage = TensorImage()
         inputTensorImage.load(inputbitmap)
