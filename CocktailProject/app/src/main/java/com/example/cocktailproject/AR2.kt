@@ -141,7 +141,7 @@ class AR2 : AppCompatActivity() {
     @SuppressLint("HardwareIds")
     private fun connectServer(currentShot:File) {
         // 서버 주소와 port 지정
-        val ipv4Address="118.223.16.156"
+        val ipv4Address=""
         val portNum="8081"
         val postUrl = "http://$ipv4Address:$portNum/"
 
@@ -179,33 +179,49 @@ class AR2 : AppCompatActivity() {
                     binding.instruction.text = "서버 연결 성공"
                 }
                 //response의 segmap key의 2차원 배열 값을 arr에 저장함
-                val json=JSONObject(response.body!!.string())
-                val jsonArr=json.getJSONArray("segmap")
-                // 2차원 배열 저장할 변수
-                var arr = ArrayList<ArrayList<Int>>()
+                try{
+                    val json=JSONObject(response.body!!.string())
+                    val isSuccess=json.getString("success")
+                    val returnMsg=json.getString("msg")
+                    runOnUiThread {
+                        binding.instruction.text = returnMsg
+                    }
+                    if (isSuccess=="false"){
+                        return
+                    }
+                    val jsonArr=json.getJSONArray("segmap")
+                    // 2차원 배열 저장할 변수
+                    var arr = ArrayList<ArrayList<Int>>()
 
-                val elapsedTime= measureTimeMillis {
-                    // call you method from here or add any other statements
-                    for (i in 0 until jsonArr.length()){
-                        arr.add(ArrayList())
+                    val elapsedTime= measureTimeMillis {
+                        // call you method from here or add any other statements
+                        for (i in 0 until jsonArr.length()){
+                            arr.add(ArrayList())
 
-                        for (j in 0 until jsonArr.getJSONArray(i).length()){
-                            try {
-                                arr[i].add(jsonArr.getJSONArray(i).getInt(j))
-                            }
-                            catch(e:Exception){
-                                Log.i("connect tag i : ",i.toString())
-                                Log.i("connect tag j : ",j.toString())
+                            for (j in 0 until jsonArr.getJSONArray(i).length()){
+                                try {
+                                    arr[i].add(jsonArr.getJSONArray(i).getInt(j))
+                                }
+                                catch(e:Exception){
+                                    Log.i("connect tag i : ",i.toString())
+                                    Log.i("connect tag j : ",j.toString())
+                                }
                             }
                         }
                     }
-                }
-                Log.i("elapsed arr Time",elapsedTime.toString())
+                    Log.i("elapsed arr Time",elapsedTime.toString())
 
-                val segtime= measureTimeMillis {
-                    printSegmap(arr)
+                    val segtime= measureTimeMillis {
+                        printSegmap(arr)
+                    }
+                    Log.i("elapsed seg Time",segtime.toString())
+
                 }
-                Log.i("elapsed seg Time",segtime.toString())
+                catch (e:Exception){
+                    runOnUiThread {
+                        binding.instruction.text = "서버에서 추론 중 오류 발생"
+                    }
+                }
 
             }
         })
