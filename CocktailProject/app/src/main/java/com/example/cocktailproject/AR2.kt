@@ -22,7 +22,6 @@ import org.json.JSONObject
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.system.measureTimeMillis
 
 
 //permission은 라이브러리에 내장되어있음.
@@ -32,6 +31,11 @@ class AR2 : AppCompatActivity() {
     private lateinit var camera:CameraView
     private lateinit var selectedCocktail:Cocktail
     private lateinit var selectedCocktailDetail: ArrayList<CocktailDetail>
+    // private var ingSize = 0
+    private var ingIndex = 0
+    private var ingTotal = 0.0
+    private lateinit var ingBool:BooleanArray
+    private lateinit var ingSum:DoubleArray
     private val classNum=4
     private val color=IntArray(classNum)
     
@@ -45,11 +49,21 @@ class AR2 : AppCompatActivity() {
         selectedCocktail= intent.getSerializableExtra("selectedCocktail") as Cocktail
         selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as ArrayList<CocktailDetail>
 
-
         init()
     }
 
     private fun init(){
+        //재료 관련 변수 초기화
+        //ingSize = selectedCocktailDetail.size //총 재료 개수
+        ingTotal = selectedCocktail.ctDetail.sumOf { it.Ing_amount } // 총 재료 양
+        ingSum= DoubleArray(selectedCocktailDetail.size){0.0}
+        var ratioSum=0.0
+        for(i in 0 until selectedCocktailDetail.size){
+            ingSum[i]=ratioSum+ selectedCocktailDetail[i].Ing_amount/ ingTotal
+            ratioSum += selectedCocktailDetail[i].Ing_amount/ ingTotal
+        }
+        ingBool = BooleanArray(selectedCocktailDetail.size){false}
+        
         //안내문 dialog
         val newFragment = ARGuideDialogFragment()
         newFragment.show(supportFragmentManager,"guide fragment show")
@@ -65,9 +79,9 @@ class AR2 : AppCompatActivity() {
         // alpha : 128 == 반투명 / 1=cup 2=fluid
         color[1]=Color.argb(128,Color.red(255),Color.blue(0),Color.green(0))
         color[2]=Color.argb(128,Color.red(0),Color.blue(255),Color.green(0))
-        color[3]=Color.argb(255,Color.red(0),Color.blue(0),Color.green(0))
+        color[3]=Color.argb(255,Color.red(0),Color.blue(0),Color.green(0)) //required fluid line
 
-        binding.instruction.text= "서버 연결 중입니다."
+
     }
 
     //TODO: cameraOrientation확인
@@ -81,7 +95,9 @@ class AR2 : AppCompatActivity() {
         }
         
         binding.nextLineBtn.setOnClickListener { 
-            //TODO : 다음 한계선 출력 구현
+            //TODO : 다음 한계선 출력 구현 (이전 단계 이동도 있으면 좋을듯)
+            if(ingBool[ingIndex])
+                ingIndex+=1
         }
     }
 
@@ -119,7 +135,7 @@ class AR2 : AppCompatActivity() {
                 //더 작은 용량의 snapshot으로 운영 TODO:잘 안될 경우 바꾸기
                 camera.takePictureSnapshot()
                 //camera.takePicture()
-                mainHandler.postDelayed(this,5000)
+                mainHandler.postDelayed(this,4000)
 
             }
         })
@@ -151,6 +167,7 @@ class AR2 : AppCompatActivity() {
         val postBodyImage=MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("image", "inf$uniqueID.jpg",requestBody)
+            .addFormDataPart("ratio",(ingSum[ingIndex]*100).toInt().toString())
             .build()
         postRequest(postUrl, postBodyImage)
 
@@ -170,52 +187,54 @@ class AR2 : AppCompatActivity() {
                 // ui thread == main thread
                 runOnUiThread {
                     binding.instruction.text = "서버 연결 실패"
+                    binding.overlayimage.setImageResource(android.R.color.transparent) //clear overlay image
                 }
             }
 
             override fun onResponse(call: Call, response: Response) {
                 Log.i("connect tag","success!")
-                runOnUiThread {
-                    binding.instruction.text = "서버 연결 성공"
-                }
+
                 //response의 segmap key의 2차원 배열 값을 arr에 저장함
                 try{
                     val json=JSONObject(response.body!!.string())
                     val isSuccess=json.getString("success")
                     val returnMsg=json.getString("msg")
+                    val ratio = json.getString("ratio")
                     runOnUiThread {
                         binding.instruction.text = returnMsg
+                        binding.overlayimage.setImageResource(android.R.color.transparent) // clear overlay
                     }
                     if (isSuccess=="false"){
+                        runOnUiThread {
+                            binding.instruction.text = selectedCocktailDetail[ingIndex].Ing_name+"을 넣어주세요"
+                       }
                         return
+                    }
+                    else if (ratio == "true"){
+                        runOnUiThread {
+                            binding.instruction.text = "다음 단계 진행가능"
+                        }
+                        ingBool[ingIndex]=true
                     }
                     val jsonArr=json.getJSONArray("segmap")
                     // 2차원 배열 저장할 변수
                     var arr = ArrayList<ArrayList<Int>>()
 
-                    val elapsedTime= measureTimeMillis {
-                        // call you method from here or add any other statements
-                        for (i in 0 until jsonArr.length()){
-                            arr.add(ArrayList())
+                    // call you method from here or add any other statements
+                    for (i in 0 until jsonArr.length()){
+                        arr.add(ArrayList())
 
-                            for (j in 0 until jsonArr.getJSONArray(i).length()){
-                                try {
-                                    arr[i].add(jsonArr.getJSONArray(i).getInt(j))
-                                }
-                                catch(e:Exception){
-                                    Log.i("connect tag i : ",i.toString())
-                                    Log.i("connect tag j : ",j.toString())
-                                }
+                        for (j in 0 until jsonArr.getJSONArray(i).length()){
+                            try {
+                                arr[i].add(jsonArr.getJSONArray(i).getInt(j))
+                            }
+                            catch(e:Exception){
+                                Log.i("data i error",i.toString())
+                                Log.i("data j error",j.toString())
                             }
                         }
                     }
-                    Log.i("elapsed arr Time",elapsedTime.toString())
-
-                    val segtime= measureTimeMillis {
-                        printSegmap(arr)
-                    }
-                    Log.i("elapsed seg Time",segtime.toString())
-
+                    printSegmap(arr)
                 }
                 catch (e:Exception){
                     runOnUiThread {
@@ -234,7 +253,8 @@ class AR2 : AppCompatActivity() {
         val pixels=IntArray(width * height)
         for (i in 0 until height){
             for (j in 0 until width){
-                pixels[i*(height)+j]=color[arr[i][j]]
+                if (arr[i][j] == 3)
+                    pixels[i*(height)+j]=color[arr[i][j]]
             }
         }
         val maskBitmap = Bitmap.createBitmap(
