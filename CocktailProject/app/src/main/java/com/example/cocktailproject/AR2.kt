@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cocktailproject.databinding.ActivityAr2Binding
 import com.example.cocktailproject.dialogFragments.ARGuideDialogFragment
@@ -50,6 +51,9 @@ class AR2 : AppCompatActivity() {
         selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as ArrayList<CocktailDetail>
 
         init()
+        //액션바 설정
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title=selectedCocktail.ctName
     }
 
     private fun init(){
@@ -87,13 +91,6 @@ class AR2 : AppCompatActivity() {
     //TODO: cameraOrientation확인
 
     private fun btnInit() {
-        binding.arBackBtn.setOnClickListener {
-            val i=Intent(this@AR2,DetailActivity::class.java)
-            i.putExtra("selectedCocktail",selectedCocktail)
-            startActivity(i)
-            finish()
-        }
-        
         binding.nextLineBtn.setOnClickListener { 
             //TODO : 다음 한계선 출력 구현 (이전 단계 이동도 있으면 좋을듯)
             if(ingBool[ingIndex])
@@ -105,7 +102,7 @@ class AR2 : AppCompatActivity() {
         super.onBackPressed()
         val i=Intent(this@AR2,DetailActivity::class.java)
         i.putExtra("selectedCocktail",selectedCocktail)
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(i)
         finish()
 
@@ -157,7 +154,7 @@ class AR2 : AppCompatActivity() {
     @SuppressLint("HardwareIds")
     private fun connectServer(currentShot:File) {
         // 서버 주소와 port 지정
-        val ipv4Address=""
+        val ipv4Address="118.223.16.156"
         val portNum="8081"
         val postUrl = "http://$ipv4Address:$portNum/"
 
@@ -253,8 +250,9 @@ class AR2 : AppCompatActivity() {
         val pixels=IntArray(width * height)
         for (i in 0 until height){
             for (j in 0 until width){
-                if (arr[i][j] == 3)
-                    pixels[i*(height)+j]=color[arr[i][j]]
+                // if (arr[i][j] == 3)
+                    // pixels[i*(height)+j]=color[arr[i][j]]
+                pixels[i*(height)+j]=color[arr[i][j]]
             }
         }
         val maskBitmap = Bitmap.createBitmap(
@@ -265,9 +263,21 @@ class AR2 : AppCompatActivity() {
         // CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
         // In order to access the TextView,ImageVuew(etc..) inside the UI thread, the code is executed inside runOnUiThread()
         runOnUiThread {
-            binding.sample.setImageBitmap(scaledBitmap)
             binding.overlayimage.setImageBitmap(scaledBitmap)
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                val i=Intent(this@AR2,DetailActivity::class.java)
+                i.putExtra("selectedCocktail",selectedCocktail)
+                i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(i)
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

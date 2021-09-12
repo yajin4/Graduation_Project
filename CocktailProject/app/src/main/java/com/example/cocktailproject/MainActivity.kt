@@ -92,5 +92,16 @@ class MainActivity : AppCompatActivity() {
             adapter.items.add(Cocktail(carr[0], carr[1], tempCocktailDetail))
         }
 
+        for (j in 1..20){
+            val rname= "c1"
+            val carr = resources.getStringArray(resources.getIdentifier(rname,"array",this.packageName))
+            val tempCocktailDetail=ArrayList<CocktailDetail>()
+            // 0번째는 cocktail name, 1번째는 photo경로, 그 다음부터 3개씩 Details 정보들
+            for (i in 2 until carr.size step 3){
+                tempCocktailDetail.add(CocktailDetail(carr[i],carr[i+1],carr[i+2].toDouble()))
+            }
+            adapter.items.add(Cocktail(carr[0], carr[1], tempCocktailDetail))
+        }
+
     }
 }

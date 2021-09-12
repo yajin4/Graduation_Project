@@ -4,17 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#807878"
-    android:backgroundTint="#837D7D"
+    android:background="@color/primaryDarkColor"
+
     tools:context=".CameraPermission">
 
-    <Button
-        android:id="@+id/permission_back_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="뒤로가기"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/info_text"

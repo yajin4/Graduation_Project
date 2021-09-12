@@ -3,9 +3,9 @@ package com.example.cocktailproject
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +24,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         //intent로 전달받은 selected cocktail확인
-        selectedCocktail=intent.getSerializableExtra("selectedCocktail") as Cocktail
+        selectedCocktail = intent.getSerializableExtra("selectedCocktail") as Cocktail
 
         binding = ActivityDetailBinding.inflate(layoutInflater)
         val view = binding.root
@@ -35,14 +35,12 @@ class DetailActivity : AppCompatActivity() {
         show_detail()
         //btn event 설정
         btnInit()
+        //액션바 설정
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title=selectedCocktail.ctName
     }
 
     private fun btnInit() {
-        binding.backBtn.setOnClickListener {
-            val intent= Intent(this@DetailActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
         //TODO("camera권한 확인 후 안되었으면 설정 창으로 되었으면 ar2 activity로 이동")
         binding.arBtn.setOnClickListener {
             checkCameraPerms()
@@ -52,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         val intent= Intent(this@DetailActivity, MainActivity::class.java)
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         finish()
     }
@@ -157,5 +155,18 @@ class DetailActivity : AppCompatActivity() {
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                val intent= Intent(this@DetailActivity, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
