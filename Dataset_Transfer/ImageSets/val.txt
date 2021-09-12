@@ -6,3 +6,7 @@ glass_10280
 glass_10263
 glass_10256
 glass_10237
+glass_70009
+glass_70018
+glass_70030
+glass_70042
