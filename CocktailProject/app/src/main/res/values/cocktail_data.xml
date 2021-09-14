@@ -16,4 +16,18 @@
         <item>cocktailImage/SodaWater.jpg</item>
         <item>3.25</item>
     </string-array>
+
+    <string-array name="c2">
+        <item>Negroni</item>
+        <item>cocktailImage/Negroni.jpg</item>
+        <item>Gin</item>
+        <item>cocktailImage/Gin.jpg</item>
+        <item>1</item>
+        <item>Vermouth sweet red</item>
+        <item>cocktailImage/VermouthSweetRed.jpeg</item>
+        <item>1</item>
+        <item>Campari</item>
+        <item>cocktailImage/Campari.jpg</item>
+        <item>1</item>
+    </string-array>
 </resources>

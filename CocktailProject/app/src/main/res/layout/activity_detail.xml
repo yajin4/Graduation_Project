@@ -43,7 +43,8 @@
         android:gravity="center"
         android:text="Ingredients"
         android:textSize="13sp"
-        android:layout_margin="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:background="@drawable/bottom_line"
         />
 
@@ -52,7 +53,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:background="@drawable/bottom_line">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cocktail_ing_layout"

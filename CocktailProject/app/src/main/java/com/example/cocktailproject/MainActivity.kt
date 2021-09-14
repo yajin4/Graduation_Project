@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 
         //assets string array이용
         //각 cocktail 정보 array name을 c1,c2 .. 식으로 저장해놓음.
-        for (j in 1 .. 1) { //until 저장해놓은 cocktail 개수
+        for (j in 1 .. 2) { //until 저장해놓은 cocktail 개수
             val rname= "c$j"
             val carr = resources.getStringArray(resources.getIdentifier(rname,"array",this.packageName))
             val tempCocktailDetail=ArrayList<CocktailDetail>()
