@@ -61,13 +61,16 @@
         <Button
             android:id="@+id/next_line_btn"
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn1"
             android:gravity="center"
             android:text="다음 단계"
+            android:textColor="@android:color/tab_indicator_text"
 
-            android:layout_margin="2dp"
-            />
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

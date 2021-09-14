@@ -14,6 +14,9 @@
 
     <color name="primaryDarkColor">#c7c7c7</color>
 
+    <color name="buttonPressed">#dddddd</color>
+    <color name="buttonColor">#f2f2f2</color>
+
     <color name="secondaryColor">#ffccbc</color>
 
     <color name="secondaryLightColor">#ffffee</color>
@@ -25,4 +28,5 @@
     <color name="secondaryTextColor">#000000</color>
 
     <color name="lightGray">#bdbdbd</color>
+    <color name="Gray">#999999</color>
 </resources>

@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp">
+
     <ImageView
         android:id="@+id/ct_img_btn"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:layout_gravity="center"
-        android:scaleType="fitCenter"
         android:foreground="@drawable/img_back"
-        />
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/ct_name"
