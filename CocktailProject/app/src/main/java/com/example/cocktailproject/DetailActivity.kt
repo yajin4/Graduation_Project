@@ -80,7 +80,7 @@ class DetailActivity : AppCompatActivity() {
                 position: Int
             ) {
                 //TODO("Not yet implemented")
-                Toast.makeText(this@DetailActivity, data.toString(), Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@DetailActivity, data.toString(), Toast.LENGTH_SHORT).show()
             }
 
         }
