@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         //cocktail(name,img,List<CocktailDetail>)
         //txt 등에 정보 저장해놓고 불러오기
         //code snippet
-        try {
+/*        try {
             for (i in 1..cocktailNum){
                 //load detail info
                     val tempCocktailDetail=ArrayList<CocktailDetail>()
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 //load image
                 //val cBmp=BitmapFactory.decodeStream(assets.open("cocktailImage/PineappleSunriseMimosas.jpg"))
-                for( j in 0..30)
+                for( j in 0..10)
                     adapter.items.add(Cocktail("Pineapple Sunrise\nMimosas","cocktailImage/"+"PineappleSunriseMimosas.jpg",tempCocktailDetail))
 
             }
@@ -77,6 +77,30 @@ class MainActivity : AppCompatActivity() {
         }
         assets.list("cocktailImage")?.forEach {
             Log.i("asset폴더",it)
+        }*/
+
+        //assets string array이용
+        //각 cocktail 정보 array name을 c1,c2 .. 식으로 저장해놓음.
+        for (j in 1 .. 2) { //until 저장해놓은 cocktail 개수
+            val rname= "c$j"
+            val carr = resources.getStringArray(resources.getIdentifier(rname,"array",this.packageName))
+            val tempCocktailDetail=ArrayList<CocktailDetail>()
+            // 0번째는 cocktail name, 1번째는 photo경로, 그 다음부터 3개씩 Details 정보들
+            for (i in 2 until carr.size step 3){
+                tempCocktailDetail.add(CocktailDetail(carr[i],carr[i+1],carr[i+2].toDouble()))
+            }
+            adapter.items.add(Cocktail(carr[0], carr[1], tempCocktailDetail))
+        }
+
+        for (j in 1..20){
+            val rname= "c1"
+            val carr = resources.getStringArray(resources.getIdentifier(rname,"array",this.packageName))
+            val tempCocktailDetail=ArrayList<CocktailDetail>()
+            // 0번째는 cocktail name, 1번째는 photo경로, 그 다음부터 3개씩 Details 정보들
+            for (i in 2 until carr.size step 3){
+                tempCocktailDetail.add(CocktailDetail(carr[i],carr[i+1],carr[i+2].toDouble()))
+            }
+            adapter.items.add(Cocktail(carr[0], carr[1], tempCocktailDetail))
         }
 
     }

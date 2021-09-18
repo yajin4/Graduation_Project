@@ -19,13 +19,19 @@
         android:theme="@style/Theme.CocktailProject"
         android:usesCleartextTraffic="true"
         >
-        <activity android:name=".CameraPermission"/>
-        <activity android:name=".AR2" />
-        <activity android:name=".ARActivity" />
-        <activity android:name=".DetailActivity" />
+        <!--<a href="https://www.freepik.com/vectors/flower">Flower vector created by macrovector - www.freepik.com</a>-->
+        <activity android:name=".CameraPermission"
+            android:label="@string/permissionTitleBar"
+            />
+        <activity android:name=".AR2"
+            android:label="@string/titleBar"
+            />
+        <activity android:name=".DetailActivity"
+            android:label="@string/titleBar"
+            />
         <activity
             android:name=".MainActivity"
-            android:label="@string/first_activity">
+            android:label="@string/titleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

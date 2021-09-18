@@ -6,57 +6,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DetailActivity">
+    tools:context=".DetailActivity"
+    >
 
-    <Button
-        android:id="@+id/back_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="뒤로가기" />
-
-    <LinearLayout
-        android:id="@+id/cocktail_photo_name_layout"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="vertical">
+        android:layout_weight="2">
 
         <ImageView
             android:id="@+id/ct_img"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            tools:srcCompat="@drawable/cocktail_img2" />
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:foreground="@drawable/img_back"
+            />
 
         <TextView
             android:id="@+id/ct_name_indetail"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="칵테일 이름" />
+            android:layout_height="match_parent"
+            android:paddingBottom="20dp"
+            android:gravity="bottom|center"
+            android:text="칵테일 이름"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            />
+    </FrameLayout>
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/ing_textview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:gravity="center"
+        android:text="Ingredients"
+        android:textSize="13sp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bottom_line"
+        />
 
-    <LinearLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:orientation="vertical">
+        android:layout_margin="5dp"
+        android:background="@drawable/bottom_line">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cocktail_ing_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
+
         </androidx.recyclerview.widget.RecyclerView>
 
         <Button
             android:id="@+id/ar_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="AR" />
-    </LinearLayout>
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:foreground="@drawable/camerabtn_selector" />
 
+    </FrameLayout>
 </LinearLayout>

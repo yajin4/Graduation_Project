@@ -9,20 +9,21 @@
     tools:context=".MainActivity">
 
 
-    <TextView
+    <!--<TextView
         android:id="@+id/sampleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:gravity="center"
         android:layout_weight="0"
-        android:text="Cocktail List" />
+        android:text="Cocktail List" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ctRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_weight="0" />
+        android:layout_weight="0"
+        android:layout_margin="2dp"/>
 
 </LinearLayout>

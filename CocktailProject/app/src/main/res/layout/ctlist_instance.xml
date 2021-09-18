@@ -1,4 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp">
+
+    <ImageView
+        android:id="@+id/ct_img_btn"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:layout_gravity="center"
+        android:foreground="@drawable/img_back"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/ct_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|center"
+        android:paddingBottom="20dp"
+        android:text="Frame Demo"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</FrameLayout>
+<!--
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,6 +41,7 @@
         android:layout_height="175dp"
         android:padding="5dp"
         android:layout_gravity="center"
+        android:alpha=""
         />
 
     <TextView
@@ -29,3 +57,4 @@
         android:layout_marginRight="5dp"
         android:textSize="12sp" />
 </LinearLayout>
+-->
