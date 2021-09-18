@@ -117,6 +117,26 @@ class AR2 : AppCompatActivity() {
         camera.addCameraListener(object:CameraListener(){
             override fun onPictureTaken(result: PictureResult) {
                 //지정한 시간마다 캡처를 하여 file 형태로 변환하고 서버에 전송함
+
+                /*result.toBitmap(513,513){
+                    val bmpFile = File(filesDir.toString()+"currentTemp.jpg")
+                    lateinit var out:OutputStream
+                    try {
+                        bmpFile.createNewFile() //file 생성
+                        out = FileOutputStream(bmpFile) //outputStream 생성
+                        it?.compress(Bitmap.CompressFormat.JPEG,100,out) //file에 bitmap 저장
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }finally {
+                        try {
+                            out.close()
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
+                    }
+
+                    connectServer(bmpFile)
+                }*/
                 val file=File(filesDir.toString()+"current.jpg")
                 result.toFile(file){
                     if (it!=null){
@@ -234,6 +254,7 @@ class AR2 : AppCompatActivity() {
                     printSegmap(arr)
                 }
                 catch (e:Exception){
+                    e.printStackTrace()
                     runOnUiThread {
                         binding.instruction.text = "서버에서 추론 중 오류 발생"
                     }
@@ -248,6 +269,7 @@ class AR2 : AppCompatActivity() {
         val width=arr[0].size
         val height=arr.size
         val pixels=IntArray(width * height)
+        Log.i("확인",arr.size.toString()+" "+arr[0].size.toString()+" ")
         for (i in 0 until height){
             for (j in 0 until width){
                 // if (arr[i][j] == 3)
