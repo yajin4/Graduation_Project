@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -28,16 +29,11 @@ class CameraPermission : AppCompatActivity() {
         btnInit()
         //권한 요청
         //checkCameraPerms()
-
+        //액션바 설정
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun btnInit() {
-        binding.permissionBackBtn.setOnClickListener {
-            val i=Intent(this@CameraPermission,DetailActivity::class.java)
-            i.putExtra("selectedCocktail",selectedCocktail)
-            startActivity(i)
-            finish()
-        }
 
         binding.requestPermsBtn.setOnClickListener {
             checkCameraPerms()
@@ -100,6 +96,19 @@ class CameraPermission : AppCompatActivity() {
 
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home ->{
+                val i=Intent(this@CameraPermission,DetailActivity::class.java)
+                i.putExtra("selectedCocktail",selectedCocktail)
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(i)
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {
