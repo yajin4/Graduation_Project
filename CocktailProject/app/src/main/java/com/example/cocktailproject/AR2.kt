@@ -105,14 +105,15 @@ class AR2 : AppCompatActivity() {
             if(ingIndex == ingBool.size-1){ //끝
                 binding.status.text = "칵테일이 완성되었습니다!"
             }
-            else if(ingBool[ingIndex]){
-                ingIndex+=1
-                binding.status.text = "다음 단계로 진행합니다."
-                binding.instruction.text = selectedCocktailDetail[ingIndex].Ing_name
-                colorIndex=3
-            }
-            else{
-                binding.status.text = "아직 적절한 양이 아닙니다."
+            else {
+                if (ingBool[ingIndex]) {
+                    ingIndex += 1
+                    binding.status.text = "다음 단계로 진행합니다."
+                    binding.instruction.text = selectedCocktailDetail[ingIndex].Ing_name
+                    colorIndex = 3
+                } else {
+                    binding.status.text = "아직 적절한 양이 아닙니다."
+                }
             }
         }
     }
@@ -171,7 +172,7 @@ class AR2 : AppCompatActivity() {
                 //더 작은 용량의 snapshot으로 운영 TODO:잘 안될 경우 바꾸기
                 camera.takePictureSnapshot()
                 //camera.takePicture()
-                mainHandler.postDelayed(this,3500)
+                mainHandler.postDelayed(this,1500)
 
             }
         })
@@ -228,7 +229,7 @@ class AR2 : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                Log.i("connect tag","success!")
+                Log.i("connect tag","success! during time(ms) : "+(response.receivedResponseAtMillis-response.sentRequestAtMillis))
 
                 //response의 segmap key의 2차원 배열 값을 arr에 저장함
                 try{
@@ -270,20 +271,20 @@ class AR2 : AppCompatActivity() {
                     }
                     if (ratio == "true") {
                         ingBool[ingIndex] = true
+                        if (ingIndex == ingBool.size-1){ //끝 //TODO: 마지막 단계에서 초과시..?
+                            binding.status.text = "칵테일이 완성되었습니다!"
+                        }
                         when(ratioStatus){
                             "good" -> {
-                                if (ingIndex == ingBool.size-1){ //끝
-                                    binding.status.text = "칵테일이 완성되었습니다!"
-                                }
                                 colorIndex=4 //good
                             }
-                            "over"->{ //TODO: 마지막 단계에서 초과시..?
+                            "over"->{
                                 colorIndex=5 //over
                             }
                         }
-                        //changeLineColor()
                     }
                     else{
+                        colorIndex=3
                         when(ratioStatus){
                             "no" -> {
 
@@ -312,13 +313,11 @@ class AR2 : AppCompatActivity() {
         val width=arr[0].size
         val height=arr.size
         val pixels=IntArray(width * height)
-        Log.i("확인",arr.size.toString()+" "+arr[0].size.toString()+" ")
         for (i in 0 until height){
             for (j in 0 until width){
                 if (arr[i][j] == 3){ //한계선
                     // 초과 // 통과 // 일반
                     pixels[i*(height)+j]=color[colorIndex]
-                    Log.i("색",colorIndex.toString())
                 }
                 else
                     pixels[i*(height)+j]=color[arr[i][j]]
