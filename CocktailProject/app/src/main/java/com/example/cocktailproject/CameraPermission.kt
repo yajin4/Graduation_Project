@@ -54,7 +54,7 @@ class CameraPermission : AppCompatActivity() {
         // Request camera permissions
         if (allPermissionsGranted()) {
             //permission 허용되어있을 시 카메라 시작
-            val i2 = Intent(this@CameraPermission, AR2::class.java)
+            val i2 = Intent(this@CameraPermission, MakingActivity::class.java)
             i2.putExtra("selectedCocktail",selectedCocktail)
             i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
             startActivity(i2)
@@ -81,7 +81,7 @@ class CameraPermission : AppCompatActivity() {
         IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) { //내가 지정한 code (camera에 지정해놓은 requestcode)
             if (allPermissionsGranted()) { //동의 했는지 확인
-                val i2 = Intent(this@CameraPermission, AR2::class.java)
+                val i2 = Intent(this@CameraPermission, MakingActivity::class.java)
                 i2.putExtra("selectedCocktail",selectedCocktail)
                 i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
                 startActivity(i2)

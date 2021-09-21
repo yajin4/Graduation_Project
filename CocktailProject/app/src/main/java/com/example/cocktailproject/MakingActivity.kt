@@ -12,7 +12,7 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cocktailproject.databinding.ActivityAr2Binding
-import com.example.cocktailproject.dialogFragments.ARGuideDialogFragment
+import com.example.cocktailproject.dialogFragments.MakingGuideDialogFragment
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
@@ -26,7 +26,7 @@ import kotlin.collections.ArrayList
 
 
 //permission은 라이브러리에 내장되어있음.
-class AR2 : AppCompatActivity() {
+class MakingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAr2Binding //ui component 접근
     private lateinit var camera:CameraView // 
@@ -328,6 +328,7 @@ class AR2 : AppCompatActivity() {
             Bitmap.Config.ARGB_8888
         )
         val scaledBitmap=Bitmap.createScaledBitmap(maskBitmap, width, height, true)
+        val scaledBitmap=Bitmap.createScaledBitmap(maskBitmap, WIDTH, HEIGHT, true)//val scaledBitmap=Bitmap.createScaledBitmap(maskBitmap, width, height, true)
         // CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
         // In order to access the TextView,ImageVuew(etc..) inside the UI thread, the code is executed inside runOnUiThread()
         runOnUiThread {
