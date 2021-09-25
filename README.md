@@ -2,6 +2,11 @@
 Cocktail AR maker  
 &nbsp;
 
+## update
+### 0829 label 다듬기 적용
+[apk download](https://drive.google.com/file/d/16Y40_0pZoCNjPmRiiShchfQkVfCUB8PY/view?usp=sharing) 
+&nbsp;
+
 ## Feature (prototype)
 - cocktail list  
 
@@ -20,6 +25,4 @@ Cocktail AR maker
 ![recog2](https://user-images.githubusercontent.com/51369785/126936024-636dc482-0cd3-43de-a9ff-6eacf842a141.jpg)
 &nbsp;
 
-## update
-### 0726 추론 서버 연결
-[apk download](https://drive.google.com/file/d/1u9kefKPungmW2D1Ub4iYgzbhaOigycI7/view?usp=sharing)  
+ 
