@@ -45,7 +45,7 @@ class MakingActivity : AppCompatActivity() {
 
     //segment 저장
     // private var arr:ArrayList<ArrayList<Int>> =  ArrayList<ArrayList<Int>>()
-    private var arr=IntArray(513*513)
+    private var arr=IntArray(WIDTH*HEIGHT)
     private lateinit var json:JSONObject
 
     //client
