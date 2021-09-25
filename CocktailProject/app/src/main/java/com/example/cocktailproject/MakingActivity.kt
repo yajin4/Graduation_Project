@@ -44,7 +44,12 @@ class MakingActivity : AppCompatActivity() {
     private var colorIndex=3 //한계선 색 3:일반 4:good 5:over
 
     //segment 저장
-    private lateinit var arr:ArrayList<ArrayList<Int>>
+    // private var arr:ArrayList<ArrayList<Int>> =  ArrayList<ArrayList<Int>>()
+    private var arr=IntArray(513*513)
+    private lateinit var json:JSONObject
+
+    //client
+    private val client= OkHttpClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,7 +114,7 @@ class MakingActivity : AppCompatActivity() {
                 if (ingBool[ingIndex]) {
                     ingIndex += 1
                     binding.status.text = "다음 단계로 진행합니다."
-                    binding.instruction.text = selectedCocktailDetail[ingIndex].Ing_name
+                    //binding.instruction.text = selectedCocktailDetail[ingIndex].Ing_name
                     colorIndex = 3
                 } else {
                     binding.status.text = "아직 적절한 양이 아닙니다."
@@ -172,7 +177,7 @@ class MakingActivity : AppCompatActivity() {
                 //더 작은 용량의 snapshot으로 운영 TODO:잘 안될 경우 바꾸기
                 camera.takePictureSnapshot()
                 //camera.takePicture()
-                mainHandler.postDelayed(this,1500)
+                mainHandler.postDelayed(this,2000)
 
             }
         })
@@ -205,13 +210,14 @@ class MakingActivity : AppCompatActivity() {
             .setType(MultipartBody.FORM)
             .addFormDataPart("image", "inf$uniqueID.jpg",requestBody)
             .addFormDataPart("ratio",(ingSum[ingIndex]*100).toInt().toString())
+            .addFormDataPart("ingName",selectedCocktailDetail[ingIndex].Ing_name)
             .build()
         postRequest(postUrl, postBodyImage)
 
     }
 
     private fun postRequest(postUrl: String, requestBody: RequestBody) {
-        val client= OkHttpClient()
+
 
         val request= Request.Builder().url(postUrl).post(requestBody).build()
 
@@ -233,69 +239,12 @@ class MakingActivity : AppCompatActivity() {
 
                 //response의 segmap key의 2차원 배열 값을 arr에 저장함
                 try{
-                    val json=JSONObject(response.body!!.string())
-                    val isSuccess=json.getString("success")
-                    val returnMsg=json.getString("msg")
-                    runOnUiThread {
-                        binding.status.text = returnMsg
-                        binding.overlayimage.setImageResource(android.R.color.transparent) // clear overlay
-                    }
-                    if (isSuccess=="false") // label 후처리 실패
-                        return
-                    val jsonArr=json.getJSONArray("segmap")
-                    // 2차원 배열 저장할 변수
-                    arr = ArrayList<ArrayList<Int>>()
+                    val temp = response.body!!.string()
 
-                    // call you method from here or add any other statements
-                    for (i in 0 until jsonArr.length()){
-                        arr.add(ArrayList())
+                    json = JSONObject(temp)
 
-                        for (j in 0 until jsonArr.getJSONArray(i).length()){
-                            try {
-                                arr[i].add(jsonArr.getJSONArray(i).getInt(j))
-                            }
-                            catch(e:Exception){
-                                Log.i("data i error",i.toString())
-                                Log.i("data j error",j.toString())
-                            }
-                        }
-                    }
+                    parse()
 
-
-                    // ratio 조사
-                    val ratio = json.getString("ratio")
-                    val ratioMsg = json.getString("ratioMsg")
-                    val ratioStatus = json.getString("ratioStatus")
-                    runOnUiThread {
-                        binding.status.text = ratioMsg
-                    }
-                    if (ratio == "true") {
-                        ingBool[ingIndex] = true
-                        if (ingIndex == ingBool.size-1){ //끝 //TODO: 마지막 단계에서 초과시..?
-                            binding.status.text = "칵테일이 완성되었습니다!"
-                        }
-                        when(ratioStatus){
-                            "good" -> {
-                                colorIndex=4 //good
-                            }
-                            "over"->{
-                                colorIndex=5 //over
-                            }
-                        }
-                    }
-                    else{
-                        colorIndex=3
-                        when(ratioStatus){
-                            "no" -> {
-
-                            }
-                            "under"->{
-
-                            }
-                        }
-                    }
-
-                    printSegmap()
                 }
                 catch (e:Exception){
                     e.printStackTrace()
@@ -303,32 +252,95 @@ class MakingActivity : AppCompatActivity() {
                         binding.status.text = "오류 발생"
                     }
                 }
-
+                response.close()
             }
         })
     }
 
+    private fun parse() {
+
+        val isSuccess = json.getString("success")
+        val returnMsg = json.getString("msg")
+        val ingName = json.getString("ingName")
+        runOnUiThread {
+            binding.status.text = returnMsg
+            binding.instruction.text = ingName
+            binding.overlayimage.setImageResource(android.R.color.transparent) // clear overlay
+        }
+
+        if (isSuccess == "false") // label 후처리 실패
+            return
+
+        //segmap으로 [row 기준값, col left, col right] list로 바꿈 -> delay down
+        val jsonArr = json.getJSONArray("segmap")
+        val rowCenter=jsonArr.getInt(0)
+        val colLeft =jsonArr.getInt(1)
+        val colRight =jsonArr.getInt(2)
+        arr = IntArray(WIDTH* HEIGHT)
+        for(i in rowCenter-3 .. rowCenter+3){
+            for(j in colLeft .. colRight){
+                arr[i* HEIGHT+j]=3
+            }
+        }
+
+        // ratio 조사
+        val ratio = json.getString("ratio")
+        val ratioMsg = json.getString("ratioMsg")
+        val ratioStatus = json.getString("ratioStatus")
+        runOnUiThread {
+            binding.status.text = ratioMsg
+        }
+        if (ratio == "true") {
+            ingBool[ingIndex] = true
+            if (ingIndex == ingBool.size - 1) { //끝 //TODO: 마지막 단계에서 초과시..?
+                runOnUiThread {
+                    binding.status.text = "칵테일이 완성되었습니다!"
+                }
+            }
+            when (ratioStatus) {
+                "good" -> {
+                    colorIndex = 4 //good
+                }
+                "over" -> {
+                    colorIndex = 5 //over
+                }
+            }
+        } else {
+            ingBool[ingIndex] = true
+            colorIndex = 3
+            when (ratioStatus) {
+                "no" -> {
+
+                }
+                "under" -> {
+
+                }
+            }
+        }
+
+        printSegmap()
+    }
+
     private fun printSegmap() {
         // seg bitmap 만들기 위해 각 class값에 맞는 color를 pixel 배열에 저장 (1차원 배열 버전). pixel color값으로 bitmap을 생성하고 화면에 출력 
-        val width=arr[0].size
-        val height=arr.size
-        val pixels=IntArray(width * height)
-        for (i in 0 until height){
-            for (j in 0 until width){
-                if (arr[i][j] == 3){ //한계선
+        //val width=arr[0].size
+        //val height=arr.size
+        val pixels=IntArray(WIDTH * HEIGHT)//IntArray(width * height)
+        for (i in 0 until HEIGHT){
+            for (j in 0 until WIDTH){
+                if (arr[i* HEIGHT+j] == 3){//(arr[i][j] == 3){ //한계선
                     // 초과 // 통과 // 일반
-                    pixels[i*(height)+j]=color[colorIndex]
+                    pixels[i* HEIGHT+j]=color[colorIndex]//pixels[i*(height)+j]=color[colorIndex]
                 }
-                else
-                    pixels[i*(height)+j]=color[arr[i][j]]
+                /*else
+                    pixels[i* HEIGHT+j]=color[arr[i* HEIGHT+j]]//pixels[i*(height)+j]=color[arr[i][j]]*/
             }
         }
         val maskBitmap = Bitmap.createBitmap(
-            pixels, width, height,
+            pixels, WIDTH, HEIGHT,//pixels, width, height,
             Bitmap.Config.ARGB_8888
         )
-        val scaledBitmap=Bitmap.createScaledBitmap(maskBitmap, width, height, true)
-        val scaledBitmap=Bitmap.createScaledBitmap(maskBitmap, WIDTH, HEIGHT, true)//val scaledBitmap=Bitmap.createScaledBitmap(maskBitmap, width, height, true)
+        val scaledBitmap=Bitmap.createScaledBitmap(maskBitmap, WIDTH, HEIGHT, true)
         // CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
         // In order to access the TextView,ImageVuew(etc..) inside the UI thread, the code is executed inside runOnUiThread()
         runOnUiThread {
@@ -348,5 +360,10 @@ class MakingActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object{
+        val WIDTH = 513
+        val HEIGHT = 513
     }
 }
