@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -88,22 +87,20 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    // adapter에 아이템 추가 //TODO("해당 cocktail detail가져오기")
+    // adapter에 아이템 추가
     private fun load_selected_cocktail_detail() {
-        //TODO("data 추가")
         selectedCocktailDetail=ArrayList()
         for (i in 0..selectedCocktail.ctDetail.size-1) {
             adapter.items.add(selectedCocktail.ctDetail[i])
             selectedCocktailDetail.add(selectedCocktail.ctDetail[i])
         }
-
     }
 
     private fun checkCameraPerms(){
         // Request camera permissions
         if (allPermissionsGranted()) {
             //permission 허용되어있을 시 카메라 시작
-            val i2 = Intent(this@DetailActivity, AR2::class.java)
+            val i2 = Intent(this@DetailActivity, MakingActivity::class.java)
             i2.putExtra("selectedCocktail",selectedCocktail)
             i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
             startActivity(i2)
@@ -130,7 +127,7 @@ class DetailActivity : AppCompatActivity() {
         IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) { //내가 지정한 code (camera에 지정해놓은 requestcode)
             if (allPermissionsGranted()) { //동의 했는지 확인
-                val i2 = Intent(this@DetailActivity, AR2::class.java)
+                val i2 = Intent(this@DetailActivity, MakingActivity::class.java)
                 i2.putExtra("selectedCocktail",selectedCocktail)
                 i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
                 startActivity(i2)

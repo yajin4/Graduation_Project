@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.cocktailproject.R
 import java.lang.IllegalStateException
 
-class ARGuideDialogFragment : DialogFragment() {
+class MakingGuideDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         /*return super.onCreateDialog(savedInstanceState)*/
         return activity?.let {
