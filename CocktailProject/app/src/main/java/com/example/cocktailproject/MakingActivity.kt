@@ -11,7 +11,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.example.cocktailproject.databinding.ActivityAr2Binding
+import com.example.cocktailproject.databinding.ActivityMakingBinding
 import com.example.cocktailproject.dialogFragments.MakingGuideDialogFragment
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
@@ -28,7 +28,7 @@ import kotlin.collections.ArrayList
 //permission은 라이브러리에 내장되어있음.
 class MakingActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAr2Binding //ui component 접근
+    private lateinit var binding: ActivityMakingBinding //ui component 접근
     private lateinit var camera:CameraView // 
     private lateinit var selectedCocktail:Cocktail //현재 선택된 cocktail
     private lateinit var selectedCocktailDetail: ArrayList<CocktailDetail> // 선택된 cocktail의 재료 정보
@@ -49,7 +49,7 @@ class MakingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding= ActivityAr2Binding.inflate(layoutInflater)
+        binding= ActivityMakingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //intent 정보 받기
@@ -75,7 +75,7 @@ class MakingActivity : AppCompatActivity() {
         ingBool = BooleanArray(selectedCocktailDetail.size){false}
         
         // TODO : 안내문 dialog를 activity등으로 변경할 지 고민..
-        val newFragment = ARGuideDialogFragment()
+        val newFragment = MakingGuideDialogFragment()
         newFragment.show(supportFragmentManager,"guide fragment show")
 
         //카메라 기능 초기설정
@@ -120,7 +120,7 @@ class MakingActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val i=Intent(this@AR2,DetailActivity::class.java)
+        val i=Intent(this@MakingActivity,DetailActivity::class.java)
         i.putExtra("selectedCocktail",selectedCocktail)
         i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(i)
@@ -340,7 +340,7 @@ class MakingActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                val i=Intent(this@AR2,DetailActivity::class.java)
+                val i=Intent(this@MakingActivity,DetailActivity::class.java)
                 i.putExtra("selectedCocktail",selectedCocktail)
                 i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(i)
