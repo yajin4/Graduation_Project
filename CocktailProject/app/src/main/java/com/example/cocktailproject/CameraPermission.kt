@@ -3,8 +3,10 @@ package com.example.cocktailproject
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -88,11 +90,11 @@ class CameraPermission : AppCompatActivity() {
                 finish()
             } else {
 
-//                finish()
                 //api30(안드11)부터 퍼미션 거절 시 다시 묻지 않음 상태가 되어 사용자가 직접해야됨
-                                Toast.makeText(this,
-                    "권한 대화상자가 표시되지 않을 시\n직접 권한을 설정해주세요.",
-                    Toast.LENGTH_SHORT).show()
+                val i2 = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:"+packageName))
+                i2.addCategory(Intent.CATEGORY_DEFAULT)
+                i2.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(i2)
 
             }
         }
