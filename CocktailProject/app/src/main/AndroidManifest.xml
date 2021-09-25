@@ -23,7 +23,7 @@
         <activity android:name=".CameraPermission"
             android:label="@string/permissionTitleBar"
             />
-        <activity android:name=".AR2"
+        <activity android:name=".MakingActivity"
             android:label="@string/titleBar"
             />
         <activity android:name=".DetailActivity"

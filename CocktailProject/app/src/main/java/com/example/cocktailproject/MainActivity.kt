@@ -53,35 +53,9 @@ class MainActivity : AppCompatActivity() {
     //adapter에 아이템 추가
     private fun manage_cocktail() {
         //TODO("data 추가")
-        //cocktail(name,img,List<CocktailDetail>)
-        //txt 등에 정보 저장해놓고 불러오기
-        //code snippet
-/*        try {
-            for (i in 1..cocktailNum){
-                //load detail info
-                    val tempCocktailDetail=ArrayList<CocktailDetail>()
-                for (j in 0..10){
-                    //val dBmp=BitmapFactory.decodeStream(assets.open(("cocktailImage/PineappleSunriseMimosas.jpg")))
-                    tempCocktailDetail.add(CocktailDetail("$j","cocktailImage/"+"PineappleSunriseMimosas.jpg",j*10+0.01))
-                }
-                //load image
-                //val cBmp=BitmapFactory.decodeStream(assets.open("cocktailImage/PineappleSunriseMimosas.jpg"))
-                for( j in 0..10)
-                    adapter.items.add(Cocktail("Pineapple Sunrise\nMimosas","cocktailImage/"+"PineappleSunriseMimosas.jpg",tempCocktailDetail))
-
-            }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Log.e("asset문제",e.toString())
-        }
-        assets.list("cocktailImage")?.forEach {
-            Log.i("asset폴더",it)
-        }*/
-
         //assets string array이용
         //각 cocktail 정보 array name을 c1,c2 .. 식으로 저장해놓음.
-        for (j in 1 .. 2) { //until 저장해놓은 cocktail 개수
+        for (j in 1 .. 2) { //저장해놓은 cocktail 개수
             val rname= "c$j"
             val carr = resources.getStringArray(resources.getIdentifier(rname,"array",this.packageName))
             val tempCocktailDetail=ArrayList<CocktailDetail>()
@@ -91,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             }
             adapter.items.add(Cocktail(carr[0], carr[1], tempCocktailDetail))
         }
-
+        //dummy
         for (j in 1..20){
             val rname= "c1"
             val carr = resources.getStringArray(resources.getIdentifier(rname,"array",this.packageName))
