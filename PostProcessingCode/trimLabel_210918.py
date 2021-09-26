@@ -111,12 +111,15 @@ def trimFluid(line, point, label, cup_upper_height):
     # correction_height까지 액체 label 변경. 이 때 컵 윗면의 세로 반지름(cup_upper_height)만큼은 제외 >>>>> 일단 포함하기로 ? resize 더 작게하면 액체 뒷쪽 edge 지울 수도 있을 것 같은데 여기 예외처리 잘 해야할 듯.
     # 액체가 이미지의 반 이상 찬 경우 액체 윗면이 직선에,그렇지 않을 경우 컵의 윗면에 가까울 것이라 가정.
     # (correction_height > top) or (correction_height-cup_upper_height>top) 인 경우 액체 label 채워지지 X.
+    # correction_height 부터 액체 상단 40%까지만 액체로 label 바꾸던 것 bottom까지 전부 바꾸는 것으로 변경.
+    # 액체 label이 두 개 추론된 경우 가운데 쪼개짐 발생하던 것 해결하기 위함.
     if(correction_height > 250):
         correction_height = correction_height - cup_upper_height
-    label[correction_height:top +
-          int((bottom-top)*0.4), left:right+1] = 2
+    label[correction_height:bottom+1, left:right+1] = 2
+
     # correction_height이 기존 액체 label 상단 점보다 낮게 나왔을 경우(값이 클 경우) 위를 컵 label로 지움 >>>> 윗 내용따라 포함하므로 + ->= - 로 변경
-    label[np.array(np.where(label == 1))[0].min()          :correction_height - cup_upper_height, left:right+1] = 1
+    label[np.array(np.where(label == 1))[0].min()
+                   :correction_height - cup_upper_height, left:right+1] = 1
     # 컵 label 컵 윗면 세로 반지름(cup_upper_height)만큼 제외
     label[:np.array(np.where(label == 1))[0].min() +
           cup_upper_height, :] = 0
