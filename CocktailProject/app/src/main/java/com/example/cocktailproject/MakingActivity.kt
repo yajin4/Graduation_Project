@@ -9,10 +9,10 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cocktailproject.databinding.ActivityMakingBinding
-import com.example.cocktailproject.dialogFragments.MakingGuideDialogFragment
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
@@ -22,7 +22,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONObject
 import java.io.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 //permission은 라이브러리에 내장되어있음.
@@ -31,7 +30,7 @@ class MakingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMakingBinding //ui component 접근
     private lateinit var camera:CameraView // 
     private lateinit var selectedCocktail:Cocktail //현재 선택된 cocktail
-    private lateinit var selectedCocktailDetail: ArrayList<CocktailDetail> // 선택된 cocktail의 재료 정보
+    private lateinit var selectedCocktailDetail: List<CocktailDetail> // 선택된 cocktail의 재료 정보
 
     private var ingIndex = 0 // 현재 넣어야하는 재료 index (selectedCocktailDetail의 index)
     private var ingTotal = 0.0 // 비율 계산용으로 전체 비율의 합
@@ -59,7 +58,7 @@ class MakingActivity : AppCompatActivity() {
 
         //intent 정보 받기
         selectedCocktail= intent.getSerializableExtra("selectedCocktail") as Cocktail
-        selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as ArrayList<CocktailDetail>
+        selectedCocktailDetail= selectedCocktail.ctDetail
         //액션바 설정
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title=selectedCocktail.ctName
@@ -78,10 +77,7 @@ class MakingActivity : AppCompatActivity() {
             ratioSum += selectedCocktailDetail[i].Ing_amount/ ingTotal
         }
         ingBool = BooleanArray(selectedCocktailDetail.size){false}
-        
-        // TODO : 안내문 dialog를 activity등으로 변경할 지 고민..
-        val newFragment = MakingGuideDialogFragment()
-        newFragment.show(supportFragmentManager,"guide fragment show")
+
 
         //카메라 기능 초기설정
         cameraInit()
@@ -358,8 +354,20 @@ class MakingActivity : AppCompatActivity() {
                 startActivity(i)
                 finish()
             }
+            R.id.showGuide -> {
+                val i2 = Intent(this@MakingActivity, GuideActivity::class.java)
+                i2.putExtra("selectedCocktail",selectedCocktail)
+                i2.putExtra("isFromDetail",false)
+                startActivity(i2)
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
     }
 
     companion object{

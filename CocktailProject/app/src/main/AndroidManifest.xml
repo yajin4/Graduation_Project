@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -17,21 +16,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailProject"
-        android:usesCleartextTraffic="true"
-        >
-        <!--<a href="https://www.freepik.com/vectors/flower">Flower vector created by macrovector - www.freepik.com</a>-->
-        <activity android:name=".CameraPermission"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".GuideActivity"
+            android:label="@string/guide_title"
+            android:screenOrientation="portrait" />
+        <!-- <a href="https://www.freepik.com/vectors/flower">Flower vector created by macrovector - www.freepik.com</a> -->
+        <activity
+            android:name=".CameraPermission"
             android:label="@string/permissionTitleBar"
-            />
-        <activity android:name=".MakingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MakingActivity"
             android:label="@string/titleBar"
-            />
-        <activity android:name=".DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DetailActivity"
             android:label="@string/titleBar"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/titleBar">
+            android:label="@string/titleBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
