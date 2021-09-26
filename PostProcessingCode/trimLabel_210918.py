@@ -57,17 +57,19 @@ def findMiddlePoint(cnt, middleX):
     cnt_x = cnt[:, :, 0]
     cnt_middle = np.where(cnt_x == [middleX])
 
-    # index[top bottom]
-    tmp = [0, 0]
-    if(cnt[cnt_middle[0][0]][0][1] > cnt[cnt_middle[0][1]][0][1]):
-        tmp[0] = cnt_middle[0][1]
-        tmp[1] = cnt_middle[0][0]
-    else:
-        tmp[0] = cnt_middle[0][0]
-        tmp[1] = cnt_middle[0][1]
+    bottom = [0, 0]
+    top = [512, 512]
+
+    for i in cnt_middle[0]:
+        print(cnt[i][0][1])
+        print(bottom[1])
+        if(cnt[i][0][1] <= top[1]):
+            top = cnt[i][0]
+        if(cnt[i][0][1] >= bottom[1]):
+            bottom = cnt[i][0]
 
     # find middle top&bottom point form contour (for this, have to use cv2.CHAIN_APPROX_NONE)
-    return tuple(cnt[tmp[0]][0]), tuple(cnt[tmp[1]][0])
+    return tuple(top), tuple(bottom)
 
 
 def trimFluid(line, point, label, cup_upper_height):
@@ -649,7 +651,7 @@ def trimLabel(image_name):
 
 
 # 파일명
-image_name = 'video_4_7'
+image_name = 'video_4_6'
 # image_name = 'glass_20260'
 start = time.time()  # 시작 시간 저장
 flag, label, str = trimLabel(image_name)
