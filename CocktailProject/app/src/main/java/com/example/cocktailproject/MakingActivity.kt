@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cocktailproject.databinding.ActivityMakingBinding
@@ -353,8 +354,20 @@ class MakingActivity : AppCompatActivity() {
                 startActivity(i)
                 finish()
             }
+            R.id.showGuide -> {
+                val i2 = Intent(this@MakingActivity, GuideActivity::class.java)
+                i2.putExtra("selectedCocktail",selectedCocktail)
+                i2.putExtra("isFromDetail",false)
+                startActivity(i2)
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
     }
 
     companion object{

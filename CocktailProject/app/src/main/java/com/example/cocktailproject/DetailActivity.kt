@@ -163,8 +163,6 @@ class DetailActivity : AppCompatActivity() {
                 //퍼미션 거절 시 설정화면으로 이동
                 val i2 = Intent(this@DetailActivity, CameraPermission::class.java)
                 i2.putExtra("selectedCocktail",selectedCocktail)
-                //TODO : detail intent 삭제
-                i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
                 startActivity(i2)
                 finish()
             }

@@ -2,6 +2,7 @@ package com.example.cocktailproject
 
 import android.Manifest
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,8 @@ class CameraPermission : AppCompatActivity() {
 
     lateinit var binding:ActivityCameraPermissionBinding
     private lateinit var selectedCocktail:Cocktail
-    private lateinit var selectedCocktailDetail: ArrayList<CocktailDetail>
+    private lateinit var selectedCocktailDetail: List<CocktailDetail>
+    private lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,13 +28,16 @@ class CameraPermission : AppCompatActivity() {
         setContentView(binding.root)
         //intent 받기
         selectedCocktail= intent.getSerializableExtra("selectedCocktail") as Cocktail
-        selectedCocktailDetail= intent.getSerializableExtra("selectedCocktailDetail") as ArrayList<CocktailDetail>
+        selectedCocktailDetail= selectedCocktail.ctDetail
         //btn event설정
         btnInit()
         //권한 요청
         //checkCameraPerms()
         //액션바 설정
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        //
+        prefs = getSharedPreferences("Pref", MODE_PRIVATE)
     }
 
     private fun btnInit() {
@@ -56,11 +61,20 @@ class CameraPermission : AppCompatActivity() {
         // Request camera permissions
         if (allPermissionsGranted()) {
             //permission 허용되어있을 시 카메라 시작
-            val i2 = Intent(this@CameraPermission, MakingActivity::class.java)
-            i2.putExtra("selectedCocktail",selectedCocktail)
-            i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
-            startActivity(i2)
-            finish()
+            //처음 어플 실행 시에만 가이드 창으로 이동.
+            if(checkFirstRun()){
+                val i2 = Intent(this@CameraPermission, GuideActivity::class.java)
+                i2.putExtra("selectedCocktail",selectedCocktail)
+                i2.putExtra("isFromDetail",true)
+                startActivity(i2)
+                finish()
+            }
+            else{
+                val i2 = Intent(this@CameraPermission, MakingActivity::class.java)
+                i2.putExtra("selectedCocktail",selectedCocktail)
+                startActivity(i2)
+                finish()
+            }
         } else {
             //권한 승인 요청
             ActivityCompat.requestPermissions(
@@ -83,11 +97,19 @@ class CameraPermission : AppCompatActivity() {
         IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) { //내가 지정한 code (camera에 지정해놓은 requestcode)
             if (allPermissionsGranted()) { //동의 했는지 확인
-                val i2 = Intent(this@CameraPermission, MakingActivity::class.java)
-                i2.putExtra("selectedCocktail",selectedCocktail)
-                i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
-                startActivity(i2)
-                finish()
+                if(checkFirstRun()){
+                    val i2 = Intent(this@CameraPermission, GuideActivity::class.java)
+                    i2.putExtra("selectedCocktail",selectedCocktail)
+                    i2.putExtra("isFromDetail",true)
+                    startActivity(i2)
+                    finish()
+                }
+                else{
+                    val i2 = Intent(this@CameraPermission, MakingActivity::class.java)
+                    i2.putExtra("selectedCocktail",selectedCocktail)
+                    startActivity(i2)
+                    finish()
+                }
             } else {
 
                 //api30(안드11)부터 퍼미션 거절 시 다시 묻지 않음 상태가 되어 사용자가 직접해야됨
@@ -111,6 +133,16 @@ class CameraPermission : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun checkFirstRun(): Boolean {
+        val isFirstRun = prefs.getBoolean("isFirstRun",true);
+        return if (isFirstRun){
+            prefs.edit().putBoolean("isFirstRun",false).apply()
+            true
+        } else{
+            false
+        }
     }
 
     companion object {
