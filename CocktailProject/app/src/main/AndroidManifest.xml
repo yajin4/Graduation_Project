@@ -19,21 +19,21 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".GuideActivity"
-            android:label="@string/titleBar"
-            android:screenOrientation="portrait"></activity>
+            android:label="@string/guide_title"
+            android:screenOrientation="portrait" />
         <!-- <a href="https://www.freepik.com/vectors/flower">Flower vector created by macrovector - www.freepik.com</a> -->
         <activity
             android:name=".CameraPermission"
             android:label="@string/permissionTitleBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MakingActivity"
             android:label="@string/titleBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DetailActivity"
             android:label="@string/titleBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:label="@string/titleBar"
