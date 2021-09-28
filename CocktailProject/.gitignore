@@ -114,3 +114,5 @@ output.json
 # with Android Studio 3.5.
 
 # End of https://www.toptal.com/developers/gitignore/api/android
+
+*.ttf

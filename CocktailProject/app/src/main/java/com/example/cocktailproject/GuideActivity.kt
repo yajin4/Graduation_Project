@@ -17,6 +17,7 @@ class GuideActivity : AppCompatActivity() {
     private lateinit var layoutIndicator:LinearLayout
     private lateinit var continueBtn:Button
     private var isFromDetail:Boolean = false
+    private lateinit var gArr:Array<String>
 
     private lateinit var selectedCocktail: Cocktail
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +40,13 @@ class GuideActivity : AppCompatActivity() {
         selectedCocktail = intent.getSerializableExtra("selectedCocktail") as Cocktail
         isFromDetail = intent.getBooleanExtra("isFromDetail", false)
 
+        initGuideArr()
         initPager()
         initIndicator()
+    }
+
+    private fun initGuideArr() {
+        gArr=resources.getStringArray(resources.getIdentifier("guideArr","array",this.packageName))
     }
 
     private fun initPager() {
@@ -58,8 +64,9 @@ class GuideActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 setCurrentIndicator(position)
-
-                // TODO : 마지막 페이지 버튼 추가 continue
+                // 각 화면마다의 guide 출력
+                binding.gTxt.text = gArr[position]
+                // 마지막 페이지 continue 버튼 보이게 설정
                 if(position==l.size-1){
                     continueBtn.visibility=Button.VISIBLE
                 }

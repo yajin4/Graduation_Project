@@ -59,6 +59,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="필요한 재료"
+            android:fontFamily="@font/nanumsquareroundb"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_margin="2dp"
@@ -71,6 +72,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="상태"
+            android:fontFamily="@font/nanumsquareroundb"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_margin="2dp"
@@ -85,9 +87,9 @@
             android:layout_weight="1"
             android:background="@drawable/btn1"
             android:gravity="center"
+            android:fontFamily="@font/nanumsquareroundb"
             android:text="다음 단계"
             android:textColor="@android:color/tab_indicator_text"
-
             android:textSize="14sp"
             android:textStyle="bold" />
 
