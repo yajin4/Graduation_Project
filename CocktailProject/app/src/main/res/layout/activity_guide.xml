@@ -31,7 +31,6 @@
         app:layout_constraintVertical_weight="4"
         android:layout_margin="30dp"
         android:text="@string/app_name"
-        android:fontFamily="@font/nanumsquareroundr"
         android:textSize="18sp"
         android:textStyle="normal"
         android:gravity="top|center"/>
@@ -55,6 +54,7 @@
         android:gravity="center"
         android:text="@string/btnContinue"
         android:textSize="13sp"
+        android:fontFamily="@font/nanumsquareroundeb"
         android:textStyle="bold"
         android:textAllCaps="false"
         android:textColor="#646464"
