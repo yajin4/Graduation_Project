@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="guideArr">
-        <item>컵의 뒷 배경에\n선이 보이지 않게 해주세요\n\n컵 인식 후에는 자리를 이동하지 마세요</item>
-        <item>무늬가 있는 컵은\n무늬를 옆으로 돌려주세요</item>
-        <item>컵에 물방울이\n맺히지 않도록 해주세요</item>
-        <item>컵을 너무 가까이서\n촬영하지 말아주세요</item>
+        <item>사용할 컵을\n다음과 같이 배치해주세요</item>
+        <item>위처럼 컵의 뒷 배경에\n선이 보이지 않게 해주세요</item>
+        <item>컵 인식 후에는\n자리를 이동하지 마세요</item>
+        <item>위처럼 무늬가 있는 컵은\n무늬를 옆으로 돌려주세요</item>
+        <item>위처럼 컵에 물방울이\n맺히지 않도록 해주세요</item>
+        <item>위처럼 컵을 너무 가까이서\n촬영하지 말아주세요</item>
+        <item>위처럼 컵 주변에 페트병 등이\n보이지 않게 해주세요</item>
+        <item>위처럼 흰 배경의 경우 빛 반사로 인해\n오차가 발생할 수 있습니다</item>
     </string-array>
 </resources>

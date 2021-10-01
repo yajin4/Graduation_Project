@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         //TODO("data 추가")
         //assets string array이용
         //각 cocktail 정보 array name을 c1,c2 .. 식으로 저장해놓음.
-        for (j in 1 .. 2) { //저장해놓은 cocktail 개수
+        for (j in 1 .. 4) { //저장해놓은 cocktail 개수
             val rname= "c$j"
             val carr = resources.getStringArray(resources.getIdentifier(rname,"array",this.packageName))
             val tempCocktailDetail=ArrayList<CocktailDetail>()
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             adapter.items.add(Cocktail(carr[0], carr[1], tempCocktailDetail))
         }
         //dummy
-        for (j in 1..20){
+        for (j in 1..2){
             val rname= "c1"
             val carr = resources.getStringArray(resources.getIdentifier(rname,"array",this.packageName))
             val tempCocktailDetail=ArrayList<CocktailDetail>()

@@ -52,9 +52,14 @@ class GuideActivity : AppCompatActivity() {
     private fun initPager() {
         //adapter 적용될 img list data 생성
         val l = ArrayList<String>()
-        l.add("cocktailImage/Campari.jpg")
-        l.add("cocktailImage/LimeJuice.jpg")
-        l.add("cocktailImage/Gin.jpg")
+        l.add("guideImage/goodPos.jpg")
+        l.add("guideImage/noLineBack.jpg")
+        l.add("guideImage/dontMove1.jpg")
+        l.add("guideImage/noLogo.jpg")
+        l.add("guideImage/waterDrop.jpg")
+        l.add("guideImage/noClose.jpg")
+        l.add("guideImage/noPet.jpg")
+        l.add("guideImage/lightProblem.jpg")
         //pager 설정
 
         val pagerAdapter = SlideGuideAdapter(l)
@@ -127,7 +132,7 @@ class GuideActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val GUIDE_NUM = 3
+        private const val GUIDE_NUM = 8
     }
 }
 
