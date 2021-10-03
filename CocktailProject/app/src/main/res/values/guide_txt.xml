@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="guideArr">
-        <item>사용할 컵을\n다음과 같이 배치해주세요</item>
+        <item>사용할 컵을\n다음과 같이 배치해주세요\n\n(정면에서 촬영할 시\n오차가 커질 수 있습니다)</item>
         <item>위처럼 컵의 뒷 배경에\n선이 보이지 않게 해주세요</item>
         <item>컵 인식 후에는\n자리를 이동하지 마세요</item>
         <item>위처럼 무늬가 있는 컵은\n무늬를 옆으로 돌려주세요</item>
