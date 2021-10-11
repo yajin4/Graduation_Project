@@ -90,9 +90,9 @@ class MakingActivity : AppCompatActivity() {
         // alpha : 128 == 반투명 / 1=cup 2=fluid 3=한계선(기본) 4=한계선(통과) 5=한계선(초과)
         color[1]=Color.argb(128,128,128,128)
         color[2]=Color.argb(128,0,255,0)
-        color[3]=Color.argb(255,0,0,0) //required fluid line
-        color[4]=Color.argb(255,0,0,255)
-        color[5]=Color.argb(255,255,0,0)
+        color[3]=Color.argb(128,0,0,0) //required fluid line
+        color[4]=Color.argb(128,0,0,255)
+        color[5]=Color.argb(128,255,0,0)
 
         binding.instruction.text = selectedCocktailDetail[ingIndex].Ing_name
 
@@ -297,12 +297,9 @@ class MakingActivity : AppCompatActivity() {
                 "good" -> {
                     colorIndex = 4 //good
                 }
-                "over" -> {
-                    colorIndex = 5 //over
-                }
             }
         } else {
-            ingBool[ingIndex] = true
+            ingBool[ingIndex] = false
             colorIndex = 3
             when (ratioStatus) {
                 "no" -> {
@@ -310,6 +307,9 @@ class MakingActivity : AppCompatActivity() {
                 }
                 "under" -> {
 
+                }
+                "over" -> {
+                    colorIndex = 5 //over
                 }
             }
         }
