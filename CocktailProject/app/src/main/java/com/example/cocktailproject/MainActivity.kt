@@ -3,6 +3,7 @@ package com.example.cocktailproject
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -13,7 +14,8 @@ import com.example.cocktailproject.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
     private lateinit var adapter: CtAdapter
-    private val cocktailNum=1
+    private val cocktailNum=20
+    private var recyclerViewState: Parcelable? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // https://developer.android.com/topic/libraries/view-binding : kotlin 1.4.20부터 findviewbyid용으로 썼던 android-kotlin-extensions 대신 view binding으로 사용됨
@@ -37,12 +39,12 @@ class MainActivity : AppCompatActivity() {
                 data: Cocktail,
                 position: Int
             ) {
-                //Toast.makeText(this@MainActivity,data.toString(),Toast.LENGTH_SHORT).show()
+                saveRecyclerViewState()
                 // Detail activity로 이동.
                 val intent=Intent(this@MainActivity,DetailActivity::class.java)
                 intent.putExtra("selectedCocktail",data)
                 startActivity(intent)
-                finish()
+                //finish()
             }
 
         }
@@ -55,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         //TODO("data 추가")
         //assets string array이용
         //각 cocktail 정보 array name을 c1,c2 .. 식으로 저장해놓음.
-        for (j in 1 .. 20) { //저장해놓은 cocktail 개수
+        for (j in 1 .. cocktailNum) { //저장해놓은 cocktail 개수
             val rname= "c$j"
             val carr = resources.getStringArray(resources.getIdentifier(rname,"array",this.packageName))
             val tempCocktailDetail=ArrayList<CocktailDetail>()
@@ -66,5 +68,21 @@ class MainActivity : AppCompatActivity() {
             adapter.items.add(Cocktail(carr[0], carr[1], tempCocktailDetail))
         }
 
+    }
+
+    private fun saveRecyclerViewState(){
+        // layoutmanager 이용하여 현재 상태를 저장
+        recyclerViewState = binding.ctRecyclerView.layoutManager!!.onSaveInstanceState()
+    }
+
+    private fun setRecyclerViewState(){
+        binding.ctRecyclerView.layoutManager!!.onRestoreInstanceState(recyclerViewState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(recyclerViewState!=null){
+            setRecyclerViewState()
+        }
     }
 }

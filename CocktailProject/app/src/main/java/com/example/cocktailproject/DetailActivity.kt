@@ -41,7 +41,7 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title=selectedCocktail.ctName
 
-        //
+        // 처음 실행인지 검사
         prefs = getSharedPreferences("Pref", MODE_PRIVATE)
     }
 
@@ -50,14 +50,6 @@ class DetailActivity : AppCompatActivity() {
         binding.arBtn.setOnClickListener {
             checkCameraPerms()
         }
-    }
-    //뒤로가기 구현
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent= Intent(this@DetailActivity, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-        finish()
     }
 
     private fun load_selected_cocktail() {
@@ -156,10 +148,7 @@ class DetailActivity : AppCompatActivity() {
                     finish()
                 }
             } else {
-//                Toast.makeText(this,
 //                    "Camera Permissions not granted by the user.",
-//                    Toast.LENGTH_SHORT).show()
-//                finish()
                 //퍼미션 거절 시 설정화면으로 이동
                 val i2 = Intent(this@DetailActivity, CameraPermission::class.java)
                 i2.putExtra("selectedCocktail",selectedCocktail)
@@ -189,11 +178,11 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                val intent= Intent(this@DetailActivity, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-                finish()
-                return true
+                //val intent= Intent(this@DetailActivity, MainActivity::class.java)
+                //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                //startActivity(intent)
+                //finish()
+                onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)
