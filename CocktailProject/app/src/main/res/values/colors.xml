@@ -30,4 +30,6 @@
 
     <color name="lightGray">#bdbdbd</color>
     <color name="Gray">#999999</color>
+
+    <color name="backColor1">#ebf2ef</color>
 </resources>
