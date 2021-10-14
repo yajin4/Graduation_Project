@@ -221,7 +221,7 @@ class MakingActivity : AppCompatActivity() {
             override fun onFailure(call: Call, e: IOException) {
                 //cancel the post on failure
                 call.cancel()
-                Log.i("connect tag","failed!!!!"+e.toString())
+                Log.i("connect tag", "failed!!!!$e")
                 // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
                 // ui thread == main thread
                 runOnUiThread {
@@ -232,7 +232,9 @@ class MakingActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 Log.i("connect tag","success! during time(ms) : "+(response.receivedResponseAtMillis-response.sentRequestAtMillis))
-
+                runOnUiThread {
+                    binding.overlayimage.setImageResource(android.R.color.transparent) // clear overlay
+                }
                 //response의 segmap key의 2차원 배열 값을 arr에 저장함
                 try{
                     val temp = response.body!!.string()
@@ -261,7 +263,7 @@ class MakingActivity : AppCompatActivity() {
         runOnUiThread {
             binding.status.text = returnMsg
             binding.instruction.text = ingName
-            binding.overlayimage.setImageResource(android.R.color.transparent) // clear overlay
+
         }
 
         if (isSuccess == "false") // label 후처리 실패
@@ -371,7 +373,7 @@ class MakingActivity : AppCompatActivity() {
     }
 
     companion object{
-        val WIDTH = 513
-        val HEIGHT = 513
+        const val WIDTH = 513
+        const val HEIGHT = 513
     }
 }

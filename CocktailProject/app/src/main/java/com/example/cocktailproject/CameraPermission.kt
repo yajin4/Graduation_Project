@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.cocktailproject.databinding.ActivityCameraPermissionBinding
@@ -113,7 +112,7 @@ class CameraPermission : AppCompatActivity() {
             } else {
 
                 //api30(안드11)부터 퍼미션 거절 시 다시 묻지 않음 상태가 되어 사용자가 직접해야됨
-                val i2 = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:"+packageName))
+                val i2 = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName"))
                 i2.addCategory(Intent.CATEGORY_DEFAULT)
                 i2.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(i2)
@@ -136,7 +135,7 @@ class CameraPermission : AppCompatActivity() {
     }
 
     private fun checkFirstRun(): Boolean {
-        val isFirstRun = prefs.getBoolean("isFirstRun",true);
+        val isFirstRun = prefs.getBoolean("isFirstRun",true)
         return if (isFirstRun){
             prefs.edit().putBoolean("isFirstRun",false).apply()
             true
@@ -146,8 +145,6 @@ class CameraPermission : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "CameraXBasic"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
     }

@@ -159,7 +159,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun checkFirstRun(): Boolean {
-        val isFirstRun = prefs.getBoolean("isFirstRun",true);
+        val isFirstRun = prefs.getBoolean("isFirstRun",true)
         return if (isFirstRun){
             prefs.edit().putBoolean("isFirstRun",false).apply()
             true
@@ -169,8 +169,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "CameraXBasic"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
     }
