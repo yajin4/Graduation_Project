@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkColor"
+    android:background="@color/backColor1"
 
     tools:context=".CameraPermission">
 
@@ -13,7 +13,7 @@
         android:id="@+id/info_text"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="카메라,오디오 권한을\n모두 허용해야\n칵테일 제조 기능을\n실행할 수 있습니다.\n\n설정 버튼을 클릭하여\n권한을 허용해주십시오.\n\n설정 버튼 클릭 후 거부 시\n애플리케이션 정보에서\n접 권한을 설정해야 합니다."
+        android:text="카메라,오디오 권한을\n모두 허용해야\n칵테일 제조 기능을\n실행할 수 있습니다.\n\n설정 버튼을 클릭하여\n권한을 허용해주십시오."
         android:textSize="18sp"
         android:gravity="center"
         android:layout_marginTop="150dp"
@@ -27,6 +27,7 @@
         android:layout_height="80dp"
         android:text="설정"
         android:layout_marginBottom="50dp"
+        android:background="@drawable/btn1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

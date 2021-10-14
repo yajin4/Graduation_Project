@@ -2,6 +2,7 @@ package com.example.cocktailproject
 
 import android.Manifest
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -19,6 +20,8 @@ class DetailActivity : AppCompatActivity() {
     lateinit var adapter: DtAdapter
     lateinit var selectedCocktail: Cocktail
     lateinit var selectedCocktailDetail: ArrayList<CocktailDetail>
+    private lateinit var prefs:SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,6 +40,9 @@ class DetailActivity : AppCompatActivity() {
         //액션바 설정
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title=selectedCocktail.ctName
+
+        // 처음 실행인지 검사
+        prefs = getSharedPreferences("Pref", MODE_PRIVATE)
     }
 
     private fun btnInit() {
@@ -44,14 +50,6 @@ class DetailActivity : AppCompatActivity() {
         binding.arBtn.setOnClickListener {
             checkCameraPerms()
         }
-    }
-    //뒤로가기 구현
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent= Intent(this@DetailActivity, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-        finish()
     }
 
     private fun load_selected_cocktail() {
@@ -90,7 +88,7 @@ class DetailActivity : AppCompatActivity() {
     // adapter에 아이템 추가
     private fun load_selected_cocktail_detail() {
         selectedCocktailDetail=ArrayList()
-        for (i in 0..selectedCocktail.ctDetail.size-1) {
+        for (i in selectedCocktail.ctDetail.indices) {
             adapter.items.add(selectedCocktail.ctDetail[i])
             selectedCocktailDetail.add(selectedCocktail.ctDetail[i])
         }
@@ -100,11 +98,19 @@ class DetailActivity : AppCompatActivity() {
         // Request camera permissions
         if (allPermissionsGranted()) {
             //permission 허용되어있을 시 카메라 시작
-            val i2 = Intent(this@DetailActivity, MakingActivity::class.java)
-            i2.putExtra("selectedCocktail",selectedCocktail)
-            i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
-            startActivity(i2)
-            finish()
+            if(checkFirstRun()){
+                val i2 = Intent(this@DetailActivity, GuideActivity::class.java)
+                i2.putExtra("selectedCocktail",selectedCocktail)
+                i2.putExtra("isFromDetail",true)
+                startActivity(i2)
+                finish()
+            }
+            else{
+                val i2 = Intent(this@DetailActivity, MakingActivity::class.java)
+                i2.putExtra("selectedCocktail",selectedCocktail)
+                startActivity(i2)
+                finish()
+            }
         } else {
             //권한 승인 요청
             ActivityCompat.requestPermissions(
@@ -127,23 +133,38 @@ class DetailActivity : AppCompatActivity() {
         IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) { //내가 지정한 code (camera에 지정해놓은 requestcode)
             if (allPermissionsGranted()) { //동의 했는지 확인
-                val i2 = Intent(this@DetailActivity, MakingActivity::class.java)
-                i2.putExtra("selectedCocktail",selectedCocktail)
-                i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
-                startActivity(i2)
-                finish()
+                //처음 어플 실행 시에만 가이드 창으로 이동.
+                if(checkFirstRun()){
+                    val i2 = Intent(this@DetailActivity, GuideActivity::class.java)
+                    i2.putExtra("selectedCocktail",selectedCocktail)
+                    i2.putExtra("isFromDetail",true)
+                    startActivity(i2)
+                    finish()
+                }
+                else{
+                    val i2 = Intent(this@DetailActivity, MakingActivity::class.java)
+                    i2.putExtra("selectedCocktail",selectedCocktail)
+                    startActivity(i2)
+                    finish()
+                }
             } else {
-//                Toast.makeText(this,
 //                    "Camera Permissions not granted by the user.",
-//                    Toast.LENGTH_SHORT).show()
-//                finish()
                 //퍼미션 거절 시 설정화면으로 이동
                 val i2 = Intent(this@DetailActivity, CameraPermission::class.java)
                 i2.putExtra("selectedCocktail",selectedCocktail)
-                i2.putExtra("selectedCocktailDetail",selectedCocktailDetail)
                 startActivity(i2)
                 finish()
             }
+        }
+    }
+
+    private fun checkFirstRun(): Boolean {
+        val isFirstRun = prefs.getBoolean("isFirstRun",true);
+        return if (isFirstRun){
+            prefs.edit().putBoolean("isFirstRun",false).apply()
+            true
+        } else{
+            false
         }
     }
 
@@ -157,11 +178,11 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                val intent= Intent(this@DetailActivity, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-                finish()
-                return true
+                //val intent= Intent(this@DetailActivity, MainActivity::class.java)
+                //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                //startActivity(intent)
+                //finish()
+                onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)

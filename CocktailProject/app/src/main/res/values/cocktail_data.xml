@@ -3,15 +3,15 @@
     <string-array name="c1">
         <item>Mojito</item>
         <item>cocktailImage/Mojito.jpg</item>
-        <item>Soda water</item>
-        <item>cocktailImage/SodaWater.jpg</item>
-        <item>3.25</item>
         <item>Rum white</item>
         <item>cocktailImage/RumWhite.jpg</item>
-        <item>1.25</item>
+        <item>4</item>
         <item>Lime Juice</item>
         <item>cocktailImage/LimeJuice.jpg</item>
-        <item>1</item>
+        <item>3</item>
+        <item>Soda water</item>
+        <item>cocktailImage/SodaWater.jpg</item>
+        <item>9</item>
     </string-array>
 
     <string-array name="c2">
@@ -21,10 +21,246 @@
         <item>cocktailImage/Gin.jpg</item>
         <item>1</item>
         <item>Vermouth sweet red</item>
-        <item>cocktailImage/VermouthSweetRed.jpeg</item>
+        <item>cocktailImage/VermouthSweetRed.jpg</item>
         <item>1</item>
         <item>Campari</item>
         <item>cocktailImage/Campari.jpg</item>
         <item>1</item>
     </string-array>
+
+    <string-array name="c3">
+        <item>Whiskey Cola</item>
+        <item>cocktailImage/WhiskeyCola.jpg</item>
+        <item>Whiskey</item>
+        <item>cocktailImage/Whiskey.jpg</item>
+        <item>1</item>
+        <item>Coca cola</item>
+        <item>cocktailImage/CocaCola.jpg</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="c4">
+        <item>Screwdriver</item>
+        <item>cocktailImage/Screwdriver.jpg</item>
+        <item>Vodka</item>
+        <item>cocktailImage/Vodka.jpg</item>
+        <item>1</item>
+        <item>Orange Juice</item>
+        <item>cocktailImage/OrangeJuice.jpg</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="c5">
+        <item>Alcohol-free Sunshine</item>
+        <item>cocktailImage/NonSunshine.jpg</item>
+        <item>Pineapple Juice</item>
+        <item>cocktailImage/PineappleJuice.jpg</item>
+        <item>2</item>
+        <item>Orange Juice</item>
+        <item>cocktailImage/OrangeJuice.jpg</item>
+        <item>1</item>
+        <item>Lemon Juice</item>
+        <item>cocktailImage/LemonJuice.jpg</item>
+        <item>0.5</item>
+        <item>Grenadine</item>
+        <item>cocktailImage/Grenadine.jpg</item>
+        <item>0.5</item>
+    </string-array>
+
+    <string-array name="c6">
+        <item>Peach Crush</item>
+        <item>cocktailImage/Peachcrush.jpg</item>
+        <item>Sweet&amp;Sour mix</item>
+        <item>cocktailImage/Sweetsourmix.jpg</item>
+        <item>2</item>
+        <item>CranBerry Juice</item>
+        <item>cocktailImage/CranberryJuice.jpg</item>
+        <item>2</item>
+        <item>Peach Liqueur</item>
+        <item>cocktailImage/PeachLiqueur.jpg</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="c7">
+        <item>Kahlua Milk</item>
+        <item>cocktailImage/KahluaMilk.jpg</item>
+        <item>Kahlua</item>
+        <item>cocktailImage/Kahlua.jpg</item>
+        <item>2</item>
+        <item>Milk</item>
+        <item>cocktailImage/Milk.jpg</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="c8">
+        <item>Pina Colada</item>
+        <item>cocktailImage/PinaColada.jpg</item>
+        <item>Rum White</item>
+        <item>cocktailImage/RumWhite.jpg</item>
+        <item>1.5</item>
+        <item>Pineapple Juice</item>
+        <item>cocktailImage/PineappleJuice.jpg</item>
+        <item>1.5</item>
+        <item>Coconut Cream</item>
+        <item>cocktailImage/CoconutCream.jpg</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="c9">
+        <item>Alcohol-free Cinderella</item>
+        <item>cocktailImage/NonCinderella.jpg</item>
+        <item>Pineapple Juice</item>
+        <item>cocktailImage/PineappleJuice.jpg</item>
+        <item>1</item>
+        <item>Orange Juice</item>
+        <item>cocktailImage/OrangeJuice.jpg</item>
+        <item>1</item>
+        <item>Lemon Juice</item>
+        <item>cocktailImage/LemonJuice.jpg</item>
+        <item>1</item>
+    </string-array>
+
+
+    <string-array name="c10">
+        <item>소맥</item>
+        <item>cocktailImage/SojuBeer.jpg</item>
+        <item>Soju</item>
+        <item>cocktailImage/Soju.jpg</item>
+        <item>3</item>
+        <item>Beer</item>
+        <item>cocktailImage/Beer.jpg</item>
+        <item>7</item>
+    </string-array>
+
+    <string-array name="c11">
+        <item>Highball</item>
+        <item>cocktailImage/Highball.jpg</item>
+        <item>Whiskey</item>
+        <item>cocktailImage/Whiskey.jpg</item>
+        <item>1</item>
+        <item>Soda Water</item>
+        <item>cocktailImage/SodaWater.jpg</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="c12">
+        <item>Spritzer</item>
+        <item>cocktailImage/Spritzer.jpg</item>
+        <item>White Wine</item>
+        <item>cocktailImage/WhiteWine.jpg</item>
+        <item>3</item>
+        <item>Soda Water</item>
+        <item>cocktailImage/SodaWater.jpg</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="c13">
+        <item>Kalimotxo</item>
+        <item>cocktailImage/Kalimotxo.jpg</item>
+        <item>Red Wine</item>
+        <item>cocktailImage/RedWine.jpg</item>
+        <item>3</item>
+        <item>Coca Cola</item>
+        <item>cocktailImage/CocaCola.jpg</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="c14">
+        <item>Kir</item>
+        <item>cocktailImage/Kir.jpg</item>
+        <item>White Wine</item>
+        <item>cocktailImage/WhiteWine.jpg</item>
+        <item>3</item>
+        <item>Crème de cassis</item>
+        <item>cocktailImage/Cassis.jpg</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="c15">
+        <item>Cuba Libre</item>
+        <item>cocktailImage/CubaLibre.jpg</item>
+        <item>Rum white</item>
+        <item>cocktailImage/RumWhite.jpg</item>
+        <item>5</item>
+        <item>Lime Juice</item>
+        <item>cocktailImage/LimeJuice.jpg</item>
+        <item>1</item>
+        <item>Coca Cola</item>
+        <item>cocktailImage/CocaCola.jpg</item>
+        <item>12</item>
+    </string-array>
+
+    <string-array name="c16">
+        <item>Moscow mule</item>
+        <item>cocktailImage/MoscowMule.jpg</item>
+        <item>Vodka</item>
+        <item>cocktailImage/Vodka.jpg</item>
+        <item>4.5</item>
+        <item>Lime Juice</item>
+        <item>cocktailImage/LimeJuice.jpg</item>
+        <item>1</item>
+        <item>Ginger Beer</item>
+        <item>cocktailImage/GingerBeer.jpg</item>
+        <item>12</item>
+    </string-array>
+
+    <string-array name="c17">
+        <item>Sea Breeze</item>
+        <item>cocktailImage/SeaBreeze.jpg</item>
+        <item>Vodka</item>
+        <item>cocktailImage/Vodka.jpg</item>
+        <item>3</item>
+        <item>Cranberry Juice</item>
+        <item>cocktailImage/CranberryJuice.jpg</item>
+        <item>6</item>
+        <item>Grapefruit Juice</item>
+        <item>cocktailImage/GrapefruitJuice.jpg</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="c18">
+        <item>Martini</item>
+        <item>cocktailImage/Martini.jpg</item>
+        <item>Gin</item>
+        <item>cocktailImage/Gin.jpg</item>
+        <item>6</item>
+        <item>Vermouth Dry</item>
+        <item>cocktailImage/VermouthDry.jpg</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="c19">
+        <item>Tequila Sunrise</item>
+        <item>cocktailImage/TequilaSunrise.jpg</item>
+        <item>Tequila</item>
+        <item>cocktailImage/Tequila.jpg</item>
+        <item>3</item>
+        <item>Orange Juice</item>
+        <item>cocktailImage/OrangeJuice.jpg</item>
+        <item>6</item>
+        <item>Grenadine</item>
+        <item>cocktailImage/Grenadine.jpg</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="c20">
+        <item>Margarita</item>
+        <item>cocktailImage/Margarita.jpg</item>
+        <item>Tequila</item>
+        <item>cocktailImage/Tequila.jpg</item>
+        <item>10</item>
+        <item>Triple Sec</item>
+        <item>cocktailImage/TripleSec.jpg</item>
+        <item>4</item>
+        <item>Lime Juice</item>
+        <item>cocktailImage/LimeJuice.jpg</item>
+        <item>3</item>
+    </string-array>
 </resources>
+
+<!--
+https://holdeniscomming.tistory.com/
+https://m.blog.naver.com/kapsy/50090355945
+https://www.allrecipes.com/recipe/207296/kahlua-with-milk/print/
+https://www.mykitchenlove.com/easy-white-wine-spritzer/#wprm-recipe-container-5367
+-->
