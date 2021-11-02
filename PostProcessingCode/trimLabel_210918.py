@@ -480,7 +480,7 @@ def trimLabel(image_name):
             M1 = cv2.moments(cnt_)
             area = cv2.contourArea(cnt_)
             if(M1['m00'] == 0):
-                M = np.append(M, np.array([500]), axis=0)
+                M = np.append(M, np.array([[500, int(area)]]), axis=0)
                 continue
             x = int(M1['m10']/M1['m00'])
             y = int(M1['m01']/M1['m00'])
@@ -776,7 +776,7 @@ def trimLabel(image_name):
 
 
 # 파일명
-image_name = 'video2_14'
+image_name = 'video1_21'
 # image_name = 'gdlass_20260'
 start = time.time()  # 시작 시간 저장
 flag, label, str = trimLabel(image_name)
