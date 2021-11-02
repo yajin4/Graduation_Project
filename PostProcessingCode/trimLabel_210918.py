@@ -78,8 +78,11 @@ def trimFluid(line, point, label, cup_upper_height):
     print('trim fluid')
     label_copy = label.copy()
 
+    x_distance = abs(line[:, 0, 0]-[point[0]])
+    y_distance = line[:, 0, 1]-[point[1]]
+    y_distance = np.where(y_distance < 0, abs(y_distance*2), y_distance)
     # 선 상의 점과 point 사이의 거리가 가까운 순으로 5개(거리!!) 거리 = x좌표 간 거리 + y좌표 간 거리
-    distances = abs(line[:, 0, 0]-[point[0]])+abs(line[:, 0, 1]-[point[1]])
+    distances = x_distance+y_distance
     near_distances = np.unique(distances)[:5]
 
     # point와 가까운 거리(near_distances)를 갖는 점들을 near_points에 append
@@ -116,7 +119,8 @@ def trimFluid(line, point, label, cup_upper_height):
     correction_height = correction_height + cup_upper_height
     if(correction_height < bottom):
         label[correction_height:bottom+1, left:right+1] = 2
-        label[np.array(np.where(label == 1))[0].min():correction_height, left:right+1] = 1
+        label[np.array(np.where(label == 1))[0].min()
+                       :correction_height, left:right+1] = 1
     else:
         label[bottom:correction_height+1, left:right+1] = 2
         label[np.array(np.where(label == 1))[0].min():bottom, left:right+1] = 1
@@ -746,7 +750,12 @@ def trimLabel(image_name):
     # 액체의 middle_top과 가장 가까운 중심점을 갖는 edge 찾기
     tmp = []
     for i in range(FLUID_APPROX_EDGE_NUM):
-        tmp = np.append(tmp, dist(M[i][1:], fluid_middle_top))
+        multi = 1
+        if((M[i][2] - fluid_middle_top[1]) > 0):
+            #
+            multi = 2
+        tmp = np.append(tmp, abs(
+            M[i][2] - fluid_middle_top[1])*multi + int(abs(M[i][1] - fluid_middle_top[0])/5))
 
     approx_line = contours_filtered_cup[int(
         contours_filtered_cup_area_sort[M[tmp.argmin()][0]][0])]
