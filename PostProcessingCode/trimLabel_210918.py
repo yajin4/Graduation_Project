@@ -119,8 +119,7 @@ def trimFluid(line, point, label, cup_upper_height):
     correction_height = correction_height + cup_upper_height
     if(correction_height < bottom):
         label[correction_height:bottom+1, left:right+1] = 2
-        label[np.array(np.where(label == 1))[0].min()
-                       :correction_height, left:right+1] = 1
+        label[np.array(np.where(label == 1))[0].min()              :correction_height, left:right+1] = 1
     else:
         label[bottom:correction_height+1, left:right+1] = 2
         label[np.array(np.where(label == 1))[0].min():bottom, left:right+1] = 1
@@ -477,28 +476,25 @@ def trimLabel(image_name):
 
     # cup 개수 확인 후 2개 이상일 경우 false return
     # label 변경 시(컵2개이상인경우) return. 컵 여러 개인 경우 segmentation 또한 일그러지기 때문에 추가 trim 하는 대신 return 하기로 결정.
-    if(len(contours_cup) >= 4):
+    if(len(contours_cup) >= 2):
         # 컵이 여러 개 인식된 경우
         M = np.empty((0, 2), dtype=int)
+        i = 0
         for cnt_ in contours_cup:
-            M1 = cv2.moments(cnt_)
-            area = cv2.contourArea(cnt_)
-            if(M1['m00'] == 0):
-                M = np.append(M, np.array([[500, int(area)]]), axis=0)
-                continue
-            x = int(M1['m10']/M1['m00'])
-            y = int(M1['m01']/M1['m00'])
-            # 중심과의 거리, 길이 추가.
+            # area = cv2.contourArea(cnt_)
+            area = cv2.arcLength(cnt_, True)
+            # [[idx, 길이]]
             M = np.append(M, np.array(
-                [[int(dist([x, y], [250, 250])), int(area)]]), axis=0)
+                [[i, int(area)]]), axis=0)
+            i += 1
 
         # 거리순으로 인덱스 정렬 후 중심과 가장 가까운 contour의 좌우상하값 구하기
         idx = M[:, 1].argsort()
 
         # 길이 가장 긴 둘 제외하고(컵 멀쩡히 나온 경우 컨투어 2개 생김.) 나머지 비교.
-        for i in idx[:-2]:
-            # print(i)
-            if(M[i, 1] > M[idx[-1], 1] / 3):
+        # 컵 영역 주변의 컨투어 하나만 생기는 경우 발생하여 가장 긴 하나를 기준으로 비교하기로 함.
+        for i in idx[:-1]:
+            if((M[i, 1] > M[idx[-1], 1] / 3) and ((M[idx[-1], 1] - M[i, 1]) > 10)):
                 return False, label_012, '컵이 2개 이상 인식되었습니다.'
 
         cnt_cup = np.array(contours_cup[idx[-1]]).reshape(
