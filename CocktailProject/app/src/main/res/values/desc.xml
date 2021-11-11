@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="Mojito">
-        모히토는 쿠바의 전통 하이볼이다.\n주로 화이트 럼, 설탕, 라임 주스, 소다수, 민트 등 다섯 가지 성분으로 구성되어 있다.
+        모히토는 쿠바의 전통 하이볼이다.\n\n주로 화이트 럼, 설탕, 라임 주스, 소다수, 민트 등 5가지 재료로 만들어진다.
+    </string>
+    <string name="Negroni">
+        네그로니는 이탈리아 칵테일로\n진, 베르무트 로소, 캄파리 등 3가지 재료로 만들어진다.\n\n오렌지 껍질을 가니쉬로 사용한다.
+    </string>
+
+    <string name="WhiskeyCola">
+        위스키 콕은 위스키에 콜라를 섞어 만드는 칵테일이다.\n\n주로 잭 다니엘을 사용하여 만들기 때문에 \'잭콕\'이라는 이름이 더 알려져있다.
+    </string>
+
+    <string name="Screwdriver">
+        스크류 드라이버는 오렌지 주스와 보드카로 만드는 하이볼 칵테일이다.\n\n스푼이 없어 드라이버로 칵테일을 저었던 것이 이름으로 붙여졌다.
+    </string>
+
+    <string name="AlcoholfreeSunshine">
+        선샤인 칵테일의 무알콜 버전이다.\n\n3가지 주스와 그레나딘시럽으로 제조할 수 있다.
+    </string>
+
+    <string name="PeachCrush">
+        복숭아 리큐르, 스윗 앤 사워 믹스, 크렌베리 주스로 제조하는 칵테일이다.\n\n도수가 낮아 가볍게 마시기 좋다.
+    </string>
+
+    <string name="KahluaMilk">
+        깔루아와 우유로 제조하는 칵테일이다.\n\n깔루아는 커피 리큐르이다.
+    </string>
+
+    <string name="PinaColada">
+        피나 콜라다는 럼, 코코넛 크림(코코넛 밀크), 파인애플 주스로 제조하는 칵테일이다.\n\n피나는 스페인어로 파인애플을 뜻한다.
+    </string>
+    
+    <string name="AlcoholfreeCinderella">
+        파인애플 주스, 오렌지 주스, 레몬 주스를 가지고 만드는 무알콜 칵테일이다.\n\n알코올을 마시지 못하는 사람들을 위한 칵테일이다.
+    </string>
+
+    <string name="소맥">
+        소주와 맥주를 섞어 제조한다.\n\n
+    </string>
+
+    <string name="Highball">
+        위스키와 탄산수로 간단하게 제조할 수 있는 칵테일이다.\n\n얼음을 넣어 차갑게 해서 마실수록 맛있다.
+    </string>
+
+    <string name="Spritzer">
+        화이트 와인과 탄산수로 제조하는 와인 기반 칵테일이다.\n\n알코올 함량이 비교적 낮아 접근성이 좋다.
+    </string>
+
+    <string name="Kalimotxo">
+        레드 와인과 콜라로 제조하는 와인 기반 칵테일이다.\n\n스페인어권에서 자주 마시는 칵테일이다.
+    </string>
+
+    <string name="Kir">
+        대표적인 와인 칵테일 중 하나로, 레드 와인과 크렘 드 카시스로 제조한다.\n\n화이트 와인, 샴페인으로 제조하기도 한다.
+    </string>
+
+    <string name="CubaLibre">
+        럼, 라임 주스, 콜라로 제조하는 칵테일이다.\n\nCuba Libre은 쿠바 독립이라는 의미로 쿠바 독립 운동에서 사용되었다.
+    </string>
+
+    <string name="Moscowmule">
+        보드카, 라임 주스, 진저비어로 제조하는 칵테일이다.\n\n라임 조각을 가니쉬로 쓴다.
+    </string>
+
+    <string name="SeaBreeze">
+        보드카, 크렌베리 주스, 자몽 주스로 제조하는 칵테일이다.
+    </string>
+
+    <string name="Martini">
+        진과 드라이 베르무트로 제조하는 칵테일이다.\n\n주로 올리브를 가니쉬로 사용한다.
+    </string>
+
+    <string name="TequilaSunrise">
+        데킬라, 오렌지 주스, 그레나딘으로 제조하는 칵테일이다.\n\n록 밴드 롤링 스타즈가 좋아해 유명해졌다.
+    </string>
+
+    <string name="Margarita">
+        데킬라, 트리플 섹, 라임 주스로 제조하는 칵테일이다.\n\n데킬라 입문자들에게 많이 추천된다.
     </string>
 </resources>
