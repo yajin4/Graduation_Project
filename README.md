@@ -1,10 +1,12 @@
-# Graduation Project 12 Team
-Cocktail Maker  
+# Cocktail Maker  
+Graduation Project 12 Team
 &nbsp;
 
 ## Update
-### 1014
-[apk download](https://drive.google.com/file/d/179zWfffRNGt7UhJ3QFsSqJ6B7ZtULjxR/view?usp=sharing) 
+### 1203
+- [apk download](https://drive.google.com/file/d/1nQn10jh4qXr6fbgG9xnsg7Te0U-Nb_qF/view?usp=sharing) 
+- 칵테일 제조 시 이전단계로 이동할 수 있게 되었습니다.
+- 컵 모양(투명한 원통형 컵 필요)에 대한 가이드가 추가되었습니다.
 &nbsp;
 
 ## Feature
