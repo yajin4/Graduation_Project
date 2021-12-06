@@ -106,22 +106,25 @@ class MakingActivity : AppCompatActivity() {
                 binding.status.text = "이전 단계로 돌아갑니다"
                 colorIndex = 3
             }
+            else{
+                binding.status.text = "첫번째 단계입니다"
+            }
         }
         // 다음단계
         binding.nextLineBtn.setOnClickListener {
-            if(ingIndex == ingBool.size-1){ //끝
-                binding.status.text = "칵테일이 완성되었습니다!"
-            }
-            else {
-                if (ingBool[ingIndex]) {
+            if (ingBool[ingIndex]) { // 비율 충족
+                if (ingIndex == ingBool.size - 1) { //끝
+                    binding.status.text = "칵테일이 완성되었습니다!"
+                } else {
                     ingIndex += 1
                     binding.status.text = "다음 단계로 진행합니다"
                     //binding.instruction.text = selectedCocktailDetail[ingIndex].Ing_name
                     colorIndex = 3
-                } else {
-                    binding.status.text = "아직 적절한 양이 아닙니다"
                 }
+            } else {
+                binding.status.text = "아직 적절한 양이 아닙니다"
             }
+
         }
     }
 
@@ -166,17 +169,6 @@ class MakingActivity : AppCompatActivity() {
         })
 
     }
-
-    //process image DeepLab TensorflowLite Model
-/*    private fun imageProcess(result: Bitmap) {
-        //predictor 객체 생성
-        val predictor=Predictor(this)
-        //runmodel : masked bitmap반환
-        val maskedBitmap=predictor.runModel(result)
-        //set ovelay image
-        binding.sample.setImageBitmap(maskedBitmap)
-        binding.overlayimage.setImageBitmap(maskedBitmap)
-    }*/
 
     // connect server
     @SuppressLint("HardwareIds")
@@ -286,17 +278,17 @@ class MakingActivity : AppCompatActivity() {
                 }
             }
         } else {
-            ingBool[ingIndex] = false
             colorIndex = 3
             when (ratioStatus) {
                 "no" -> {
-
+                    ingBool[ingIndex] = false
                 }
                 "under" -> {
-
+                    ingBool[ingIndex] = false
                 }
                 "over" -> {
                     colorIndex = 5 //over
+                    ingBool[ingIndex] = true
                 }
             }
         }
