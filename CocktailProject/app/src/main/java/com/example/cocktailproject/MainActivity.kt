@@ -1,12 +1,9 @@
 package com.example.cocktailproject
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cocktailproject.databinding.ActivityMainBinding

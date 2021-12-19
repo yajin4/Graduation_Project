@@ -59,6 +59,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="필요한 재료"
+            android:textColor="@color/black"
             android:fontFamily="@font/nanumsquareroundeb"
             android:textSize="14sp"
             android:layout_margin="2dp"
@@ -76,20 +77,46 @@
             android:layout_margin="2dp"
             android:background="@drawable/bottom_line"
             />
-
-        <Button
-            android:id="@+id/next_line_btn"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="12dp"
             android:layout_weight="1"
-            android:background="@drawable/btn1"
-            android:gravity="center"
-            android:fontFamily="@font/nanumsquareroundeb"
-            android:text="다음 단계"
-            android:textColor="@android:color/tab_indicator_text"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/before_line_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn1"
+                android:gravity="center"
+                android:fontFamily="@font/nanumsquareroundeb"
+                android:text="이전 단계"
+                android:textColor="@android:color/tab_indicator_text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/next_line_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn1"
+                android:fontFamily="@font/nanumsquareroundeb"
+                android:gravity="center"
+                android:text="다음 단계"
+                android:textColor="@android:color/tab_indicator_text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

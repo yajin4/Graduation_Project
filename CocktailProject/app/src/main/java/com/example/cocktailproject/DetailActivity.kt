@@ -32,9 +32,9 @@ class DetailActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         //넘어온 칵테일 이름, 사진 출력
-        load_selected_cocktail()
+        loadSelectedCocktail()
         //detail data 출력
-        show_detail()
+        showDetail()
         //btn event 설정
         btnInit()
         //액션바 설정
@@ -50,15 +50,21 @@ class DetailActivity : AppCompatActivity() {
         binding.arBtn.setOnClickListener {
             checkCameraPerms()
         }
+        binding.ctImg.setOnClickListener {
+            val i = Intent(this@DetailActivity, IntroducingActivity::class.java)
+            i.putExtra("selectedCocktail",selectedCocktail)
+            startActivity(i)
+            //finish()
+        }
     }
 
-    private fun load_selected_cocktail() {
+    private fun loadSelectedCocktail() {
         val cBmp= BitmapFactory.decodeStream(assets.open(selectedCocktail.ctPhoto))
         binding.ctImg.setImageBitmap(cBmp)
         binding.ctNameIndetail.text=selectedCocktail.ctName
     }
 
-    private fun show_detail() {
+    private fun showDetail() {
         binding.cocktailIngLayout.layoutManager = LinearLayoutManager(this)
         //adapter 생성
         adapter = DtAdapter(ArrayList<CocktailDetail>())
@@ -66,7 +72,7 @@ class DetailActivity : AppCompatActivity() {
         // recyclerview에 연결
         binding.cocktailIngLayout.adapter = adapter
         //data 추가
-        load_selected_cocktail_detail()
+        loadSelectedCocktailDetail()
 
         //click event
         adapter.itemClickListener = object : DtAdapter.OnItemClickListener {
@@ -86,7 +92,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     // adapter에 아이템 추가
-    private fun load_selected_cocktail_detail() {
+    private fun loadSelectedCocktailDetail() {
         selectedCocktailDetail=ArrayList()
         for (i in selectedCocktail.ctDetail.indices) {
             adapter.items.add(selectedCocktail.ctDetail[i])
@@ -159,7 +165,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun checkFirstRun(): Boolean {
-        val isFirstRun = prefs.getBoolean("isFirstRun",true);
+        val isFirstRun = prefs.getBoolean("isFirstRun",true)
         return if (isFirstRun){
             prefs.edit().putBoolean("isFirstRun",false).apply()
             true
@@ -169,8 +175,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "CameraXBasic"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
     }
@@ -178,10 +182,6 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
-                //val intent= Intent(this@DetailActivity, MainActivity::class.java)
-                //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                //startActivity(intent)
-                //finish()
                 onBackPressed()
             }
         }

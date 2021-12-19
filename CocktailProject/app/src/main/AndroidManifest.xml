@@ -17,11 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailProject"
         android:usesCleartextTraffic="true">
+        <activity android:name=".IntroducingActivity"
+            android:label="@string/intro_title"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".GuideActivity"
             android:label="@string/guide_title"
-            android:screenOrientation="portrait" />
-        <!-- <a href="https://www.freepik.com/vectors/flower">Flower vector created by macrovector - www.freepik.com</a> -->
+            android:screenOrientation="portrait" /> <!-- <a href="https://www.freepik.com/vectors/flower">Flower vector created by macrovector - www.freepik.com</a> -->
         <activity
             android:name=".CameraPermission"
             android:label="@string/permissionTitleBar"
