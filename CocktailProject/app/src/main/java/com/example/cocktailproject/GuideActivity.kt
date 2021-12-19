@@ -133,7 +133,7 @@ class GuideActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val GUIDE_NUM = 8
+        private const val GUIDE_NUM = 9
     }
 }
 
