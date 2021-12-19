@@ -51,7 +51,7 @@
     </string-array>
 
     <string-array name="c5">
-        <item>Alcohol-free Sunshine</item>
+        <item>Alcohol free Sunshine</item>
         <item>cocktailImage/NonSunshine.jpg</item>
         <item>Pineapple Juice</item>
         <item>cocktailImage/PineappleJuice.jpg</item>
@@ -107,7 +107,7 @@
     </string-array>
 
     <string-array name="c9">
-        <item>Alcohol-free Cinderella</item>
+        <item>Alcohol free Cinderella</item>
         <item>cocktailImage/NonCinderella.jpg</item>
         <item>Pineapple Juice</item>
         <item>cocktailImage/PineappleJuice.jpg</item>

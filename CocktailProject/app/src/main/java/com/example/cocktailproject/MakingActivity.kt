@@ -98,24 +98,33 @@ class MakingActivity : AppCompatActivity() {
 
     }
 
-    //TODO: cameraOrientation확인
-
     private fun btnInit() {
-        binding.nextLineBtn.setOnClickListener { 
-            //TODO : 다음 한계선 출력 구현 (이전 단계 이동도 있으면 좋을듯)
-            if(ingIndex == ingBool.size-1){ //끝
-                binding.status.text = "칵테일이 완성되었습니다!"
+        // 이전단계
+        binding.beforeLineBtn.setOnClickListener {
+            if(ingIndex != 0){ // 맨 처음 제외하고 동작
+                ingIndex -= 1
+                binding.status.text = "이전 단계로 돌아갑니다"
+                colorIndex = 3
             }
-            else {
-                if (ingBool[ingIndex]) {
+            else{
+                binding.status.text = "첫번째 단계입니다"
+            }
+        }
+        // 다음단계
+        binding.nextLineBtn.setOnClickListener {
+            if (ingBool[ingIndex]) { // 비율 충족
+                if (ingIndex == ingBool.size - 1) { //끝
+                    binding.status.text = "칵테일이 완성되었습니다!"
+                } else {
                     ingIndex += 1
-                    binding.status.text = "다음 단계로 진행합니다."
+                    binding.status.text = "다음 단계로 진행합니다"
                     //binding.instruction.text = selectedCocktailDetail[ingIndex].Ing_name
                     colorIndex = 3
-                } else {
-                    binding.status.text = "아직 적절한 양이 아닙니다."
                 }
+            } else {
+                binding.status.text = "아직 적절한 양이 아닙니다"
             }
+
         }
     }
 
@@ -138,26 +147,6 @@ class MakingActivity : AppCompatActivity() {
         camera.addCameraListener(object:CameraListener(){
             override fun onPictureTaken(result: PictureResult) {
                 //지정한 시간마다 캡처를 하여 file 형태로 변환하고 서버에 전송함
-
-                /*result.toBitmap(513,513){
-                    val bmpFile = File(filesDir.toString()+"currentTemp.jpg")
-                    lateinit var out:OutputStream
-                    try {
-                        bmpFile.createNewFile() //file 생성
-                        out = FileOutputStream(bmpFile) //outputStream 생성
-                        it?.compress(Bitmap.CompressFormat.JPEG,100,out) //file에 bitmap 저장
-                    }catch (e:Exception){
-                        e.printStackTrace()
-                    }finally {
-                        try {
-                            out.close()
-                        }catch (e:Exception){
-                            e.printStackTrace()
-                        }
-                    }
-
-                    connectServer(bmpFile)
-                }*/
                 val file=File(filesDir.toString()+"current.jpg")
                 result.toFile(file){
                     if (it!=null){
@@ -166,6 +155,7 @@ class MakingActivity : AppCompatActivity() {
                 }
             }
         })
+        
         //2초마다 한번씩 불리게 쓰레드 반복실행
         val mainHandler= Handler(Looper.getMainLooper())
         mainHandler.post(object : Runnable{
@@ -179,17 +169,6 @@ class MakingActivity : AppCompatActivity() {
         })
 
     }
-
-    //process image DeepLab TensorflowLite Model
-/*    private fun imageProcess(result: Bitmap) {
-        //predictor 객체 생성
-        val predictor=Predictor(this)
-        //runmodel : masked bitmap반환
-        val maskedBitmap=predictor.runModel(result)
-        //set ovelay image
-        binding.sample.setImageBitmap(maskedBitmap)
-        binding.overlayimage.setImageBitmap(maskedBitmap)
-    }*/
 
     // connect server
     @SuppressLint("HardwareIds")
@@ -241,7 +220,7 @@ class MakingActivity : AppCompatActivity() {
 
                     json = JSONObject(temp)
 
-                    parse()
+                    parse() //TODO : json을 전역 아닌 멤버로 하고 인자로 주면 좋을 듯
 
                 }
                 catch (e:Exception){
@@ -290,7 +269,7 @@ class MakingActivity : AppCompatActivity() {
         }
         if (ratio == "true") {
             ingBool[ingIndex] = true
-            if (ingIndex == ingBool.size - 1) { //끝 //TODO: 마지막 단계에서 초과시..?
+            if (ingIndex == ingBool.size - 1) { //끝 //TODO: 마지막 단계에서 초과시..? 왔다갔다 인식되면..?
                 runOnUiThread {
                     binding.status.text = "칵테일이 완성되었습니다!"
                 }
@@ -301,17 +280,17 @@ class MakingActivity : AppCompatActivity() {
                 }
             }
         } else {
-            ingBool[ingIndex] = false
             colorIndex = 3
             when (ratioStatus) {
                 "no" -> {
-
+                    ingBool[ingIndex] = false
                 }
                 "under" -> {
-
+                    ingBool[ingIndex] = false
                 }
                 "over" -> {
                     colorIndex = 5 //over
+                    ingBool[ingIndex] = true
                 }
             }
         }

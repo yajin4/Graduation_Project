@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".IntroducingActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/ct_img_intro"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@drawable/img_back"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/ct_name_intro"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|center"
+            android:paddingBottom="20dp"
+            android:text="칵테일 이름"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold|italic" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/introTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="2"
+
+        android:gravity="center"
+        android:padding="30dp"
+        android:text="grffdsafsdfadsfgdfgdxgdfgdxgdxfgfdgdfgfdgdfgfdgdfgdfgfdgdfgdffdgdfgdfgfdgdgfd
+       fasd"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

@@ -53,6 +53,7 @@ class GuideActivity : AppCompatActivity() {
         //adapter 적용될 img list data 생성
         val l = ArrayList<String>()
         l.add("guideImage/goodPos.jpg")
+        l.add("guideImage/cupStandard.jpg")
         l.add("guideImage/noLineBack.jpg")
         l.add("guideImage/dontMove1.jpg")
         l.add("guideImage/noLogo.jpg")
@@ -132,7 +133,7 @@ class GuideActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val GUIDE_NUM = 8
+        private const val GUIDE_NUM = 9
     }
 }
 
